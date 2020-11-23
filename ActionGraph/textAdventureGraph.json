@@ -1,0 +1,26 @@
+﻿{
+  "Nodes": [
+    {
+      "Id": "Start",
+      "Edges": [
+        {
+          "Id": "intro",
+          "Action": "text",
+          "To": "Intro"
+        }
+      ],
+      "Value": ""
+    },
+    {
+      "Id": "Intro",
+      "Edges": [
+        {
+          "Id": "intro",
+          "Action": "text",
+          "To": "intro"
+        }
+      ],
+      "Value": "You find your gaze drawn upward, past the crows nesting in the great gray parapets"
+    }
+  ]
+}
