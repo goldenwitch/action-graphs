@@ -1,0 +1,26 @@
+﻿{
+  "Nodes": [
+    {
+      "Id": "Start",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "text",
+          "To": "End"
+        }
+      ],
+      "Value": "Echo: "
+    },
+    {
+      "Id": "End",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "templateText",
+          "To": "Start"
+        }
+      ],
+      "Value": "You said '{system:velocity}'"
+    }
+  ]
+}

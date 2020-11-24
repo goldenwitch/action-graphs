@@ -1,4 +1,4 @@
-﻿namespace Graph
+﻿namespace ActionGraph
 open System
 open Newtonsoft.Json.Linq
 

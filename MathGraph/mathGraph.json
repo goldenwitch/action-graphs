@@ -1,0 +1,30 @@
+﻿{
+  "Nodes": [
+    {
+      "Id": "Math",
+      "Edges": [
+        {
+          "Id": "multiply",
+          "Action": "multiply",
+          "To": "Math"
+        },
+        {
+          "Id": "subtract",
+          "Action": "subtract",
+          "To": "Math"
+        },
+        {
+          "Id": "add",
+          "Action": "add",
+          "To": "Math"
+        },
+        {
+          "Id": "assign",
+          "Action": "assign",
+          "To":  "Math"
+        }
+      ],
+      "Value": 0
+    }
+  ]
+}

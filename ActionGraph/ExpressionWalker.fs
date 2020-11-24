@@ -1,4 +1,4 @@
-﻿namespace Graph
+﻿namespace ActionGraph
 
 module Expressions = 
     type Walker<'T> =
