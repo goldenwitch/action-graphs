@@ -9,7 +9,15 @@
           "To": "End"
         }
       ],
-      "Value": "Echo: "
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "text",
+            "Edges": [],
+            "Value": "Echo: "
+          }
+        ]
+      }
     },
     {
       "Id": "End",
@@ -20,7 +28,26 @@
           "To": "Start"
         }
       ],
-      "Value": "You said '{system:velocity}'"
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "text",
+            "Edges": [],
+            "Value": "You said '{system:velocity}'. {node:count} messages have been sent."
+          }
+        ]
+      }
+    },
+    {
+      "Id": "Count",
+      "Edges": [
+        {
+          "Id": "add",
+          "Action": "add",
+          "To": "Count"
+        }
+      ],
+      "Value": 0
     }
   ]
 }

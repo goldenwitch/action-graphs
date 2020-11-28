@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="textAdventureGraph.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Graph.fs" />
+    <Compile Include="GraphConversions.fs" />
+    <Compile Include="ActionGraph.fs" />
     <Compile Include="ExpressionWalker.fs" />
   </ItemGroup>
 

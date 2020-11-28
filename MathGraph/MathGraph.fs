@@ -5,85 +5,75 @@ open System.IO
 open Expressions
 
 module MathGraph =
-    let HandleVelocity(vel, def) =
-         let (|Integer|_|) (str: string) =
-            let mutable intvalue = 0
-            if System.Int32.TryParse(str, &intvalue) then Some(intvalue)
-            else None
-         let (|IntValue|_|) (vel: GraphValue) =
-             match vel with
-             | IntValue i -> Some(i)
-             | _ -> None
-         let (|StringValue|_|) (vel: GraphValue) =
-             match vel with
-             | StringValue s ->
-                 match s with
-                 | Integer i -> Some(i)
-                 | _ -> None
-             | _ -> None
-         match vel with
-            | IntValue i -> i
-            | StringValue s -> s
-            | _ -> def
-
     let Definition =
         let edgeFunctions =
             Map.ofSeq(seq{
                 yield ("add", 
-                    function(fromNode : Node<int>, toNode: Node<int>, velocity) -> 
+                    function(fromNode : Node, toNode: Node, velocity, _) -> 
                             //If velocity is appropriate for math, use that, else use 1
-                            let trueVel = HandleVelocity(velocity, 1);
-                            fromNode.Value <- fromNode.Value+trueVel
-                            Console.WriteLine("Add walked with velocity "+trueVel.ToString()+", value at " + fromNode.Value.ToString())
+                            let vel = GraphConversions.HandleVelocity(velocity, 1);
+                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a+vel))
+                            Console.WriteLine("Add walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
                 );
                 yield ("subtract", 
-                    function(fromNode : Node<int>, toNode: Node<int>, velocity) -> 
-                            let trueVel = HandleVelocity(velocity, 1);
-                            fromNode.Value <- fromNode.Value-trueVel
-                            Console.WriteLine("Subtract walked with velocity "+trueVel.ToString()+", value at " + fromNode.Value.ToString())
+                    function(fromNode : Node, toNode: Node, velocity, _) -> 
+                            let vel = GraphConversions.HandleVelocity(velocity, 1);
+                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a-vel))
+                            Console.WriteLine("Subtract walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
                 );
                 yield ("multiply", 
-                    function(fromNode : Node<int>, toNode: Node<int>, velocity) -> 
-                            let trueVel = HandleVelocity(velocity, 1);
-                            fromNode.Value <- fromNode.Value*trueVel
-                            Console.WriteLine("Multiply walked with velocity "+trueVel.ToString()+", value at " + fromNode.Value.ToString())
+                    function(fromNode : Node, toNode: Node, velocity, _) -> 
+                            let vel = GraphConversions.HandleVelocity(velocity, 1);
+                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a*vel))
+                            Console.WriteLine("Multiply walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
                 );
                 yield ("assign", 
-                    function(fromNode : Node<int>, toNode: Node<int>, velocity) -> 
-                            let trueVel = HandleVelocity(velocity, 0);
-                            fromNode.Value <- trueVel
-                            Console.WriteLine("Assigned walked with velocity "+trueVel.ToString()+", value at " + fromNode.Value.ToString())
+                    function(fromNode : Node, toNode: Node, velocity, _) -> 
+                            let vel = GraphConversions.HandleVelocity(velocity, 1);
+                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(vel))
+                            Console.WriteLine("Assigned walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
                 );
             })
-        let graphDefinition = ActionGraph.Load<int>(File.ReadAllText("mathGraph.json"), edgeFunctions)
+        let graphDefinition = ActionGraph.Load(File.ReadAllText("mathGraph.json"), edgeFunctions)
         graphDefinition
 
     type MathWalker =
         {
-            CurrentNode : Node<int>
+            BaseWalker : SuperWalker
         }
 
-        member this.Walk(graph : Graph<int>, expression : string) =
-            let baseWalker : SuperWalker<int> = 
-                {
-                    CurrentNode = this.CurrentNode
+        member this.Walk(graph : Graph, expression : string) =
+            this.BaseWalker.Walk(graph,expression)
+            ()
+
+    let LoadWalker(graph, currentNode) =
+            {
+                BaseWalker = {
+                    BaseWalker =
+                        {
+                            CurrentNode = currentNode
+                        }
                     SuperEdges = 
                         Map.ofSeq(
                             seq{
                                 yield ("Exponent", 
-                                    function(input : Walker<int>, velocity) ->
-                                            let trueVel = HandleVelocity(velocity, 1);
+                                    function(input : Walker, velocity) ->
+                                            let trueVel = GraphConversions.HandleVelocity(velocity, 1);
                                             if trueVel = 0 then
                                                 input.Walk(graph, "assign=1")
                                             else if trueVel = 1 then
                                                 ()
                                             else
-                                                let expExpression = [| for i in 0 .. Math.Abs(trueVel-2) -> "multiply="+input.CurrentNode.Value.ToString() |]
-                                                input.Walk(graph, String.concat(".") expExpression)
-                                            Console.WriteLine("Exponent walked with velocity "+trueVel.ToString()+", value at " + input.CurrentNode.Value.ToString())
+                                                GraphConversions.actOnGraphLikeAsInt(input.CurrentNode.Value, 
+                                                    fun a ->
+                                                        let expExpression = [| for i in 0 .. Math.Abs(trueVel-2) -> "multiply="+a.ToString() |]
+                                                        input.Walk(graph, String.concat(".") expExpression)
+                                                        Console.WriteLine("Exponent walked with velocity "+trueVel.ToString()+", value at " + input.CurrentNode.Value.ToString())
+                                                )
                                 );
                             }
                         )
                 }
-            baseWalker.Walk(graph,expression)
-            ()
+            }
+
+
