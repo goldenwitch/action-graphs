@@ -26,8 +26,9 @@ namespace GraphToMermaid
         /// Transform a given json graph in Autumn format, and writes the mermaid equivalent.
         /// </summary>
         /// <param name="graph">The graph.</param>
-        /// <param name="writer"></param>
-        private static void TransformJsonGraph(JToken graph, StreamWriter writer)
+        /// <param name="writer">The writer.</param>
+        /// <param name="parentNodeName">The parent all nodes should be tied to.</param>
+        private static void TransformJsonGraph(JToken graph, StreamWriter writer, string parentNodeName = null)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph));
@@ -37,7 +38,18 @@ namespace GraphToMermaid
 
             foreach (var node in graph["Nodes"].AsJEnumerable())
             {
-                var nodeId = node["Id"].ToString();
+                var nodeId = parentNodeName == null
+                    ? node["Id"].ToString()
+                    : parentNodeName + node["Id"].ToString();
+
+                if (parentNodeName != null)
+                {
+                    writer.Write("    ");
+                    writer.Write(parentNodeName);
+                    writer.Write(" --> ");
+                    writer.WriteLine(nodeId);
+                    writer.WriteLine($"    style {nodeId} fill:#f9f,stroke:#333,stroke-width:4px;");
+                }
 
                 foreach (var edge in node["Edges"].AsJEnumerable())
                 {
@@ -53,12 +65,18 @@ namespace GraphToMermaid
                     writer.Write(edge["Action"].ToString());
 
                     writer.Write("| ");
-                    writer.WriteLine(edge["To"].ToString());
+                    writer.WriteLine(parentNodeName + edge["To"].ToString());
                 }
 
                 if (node["Value"].Type == JTokenType.Object)
                 {
-                    TransformJsonGraph(node["Value"], writer);
+                    string valueGraphName = nodeId + "-VG";
+                    writer.Write("    ");
+                    writer.Write(nodeId);
+                    writer.Write(" --> ");
+                    writer.WriteLine(valueGraphName);
+                    writer.WriteLine($"    style {valueGraphName} fill:#f9f,stroke:#333,stroke-width:4px;");
+                    TransformJsonGraph(node["Value"], writer, valueGraphName);
                 }
             }
         }
