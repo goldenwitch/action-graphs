@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ActionGraph", "ActionGraph\ActionGraph.fsproj", "{057FA674-4C58-40C0-A0B5-67AF7689A3B1}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MathGraph", "MathGraph\MathGraph.fsproj", "{4F247482-55B3-4340-B9DB-1D1668131628}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MathGraph", "MathGraph\MathGraph.fsproj", "{4F247482-55B3-4340-B9DB-1D1668131628}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EchoGraph", "EchoGraph\EchoGraph.fsproj", "{55BE7002-3EF2-4229-834B-1C754A96FD2C}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "EchoGraph", "EchoGraph\EchoGraph.fsproj", "{55BE7002-3EF2-4229-834B-1C754A96FD2C}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TestClient", "..\action-graph-clients\ConsoleClientF\TestClient.fsproj", "{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
