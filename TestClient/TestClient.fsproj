@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\action-graphs\ActionGraph\ActionGraph.fsproj" />
+    <ProjectReference Include="..\..\action-graphs\EchoGraph\EchoGraph.fsproj" />
+    <ProjectReference Include="..\..\action-graphs\MathGraph\MathGraph.fsproj" />
+  </ItemGroup>
+
+</Project>
