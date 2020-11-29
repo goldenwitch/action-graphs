@@ -1,12 +1,12 @@
-﻿namespace Graph
+﻿namespace ActionGraph
 
 module Expressions = 
-    type Walker<'T> =
+    type Walker =
         {
-            mutable CurrentNode : Node<'T>
+            mutable CurrentNode : Node
         }
 
-        member this.Walk(graph : Graph<'T>, expression : string) =
+        member this.Walk(graph : Graph, expression : string) =
             //Accepts graph and expression
             //Expression in form of "Edge.Edge.Edge" OR "Edge=1.Edge.Edge=5"
             for label in expression.Split(".") do
@@ -17,28 +17,23 @@ module Expressions =
                 else
                     this.CurrentNode <- graph.WalkEdge(this.CurrentNode.Id, FuncValue((StringValue(valueSplit.[0]), StringValue(valueSplit.[1]))))
     
-    type SuperWalker<'T> =
+    type SuperWalker =
         {
-            CurrentNode : Node<'T>
-            SuperEdges : Map<string, (Walker<'T> * GraphValue -> Unit)>
+            BaseWalker : Walker
+            SuperEdges : Map<string, (Walker * GraphValue -> Unit)>
         }
 
-        member this.Walk(graph : Graph<'T>, expression : string) =
-            let baseWalker : Walker<'T> = 
-                {
-                    CurrentNode = this.CurrentNode
-                }
-        
+        member this.Walk(graph : Graph, expression : string) =
             for label in expression.Split(".") do
                 let valueSplit = label.Split("=")
                 if valueSplit.Length <= 1 then
                     if this.SuperEdges.ContainsKey(label) then //If the next item on the expression matches an item from the superedges, run the super edge
-                        this.SuperEdges.[label](baseWalker, StringValue(label))
+                        this.SuperEdges.[label](this.BaseWalker, StringValue(label))
                     else //Else run the normal walker on the remaining components of the expression
-                        baseWalker.Walk(graph, label)
+                        this.BaseWalker.Walk(graph, label)
                 else
                     if this.SuperEdges.ContainsKey(valueSplit.[0]) then //If the next item on the expression matches an item from the superedges, run the super edge
-                        this.SuperEdges.[valueSplit.[0]](baseWalker, StringValue(valueSplit.[1]))
+                        this.SuperEdges.[valueSplit.[0]](this.BaseWalker, StringValue(valueSplit.[1]))
                     else //Else run the normal walker on the remaining components of the expression
-                        baseWalker.Walk(graph, label)
+                        this.BaseWalker.Walk(graph, label)
             ()

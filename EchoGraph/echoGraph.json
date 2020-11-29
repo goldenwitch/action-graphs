@@ -1,0 +1,61 @@
+﻿{
+  "Nodes": [
+    {
+      "Id": "Start",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "text",
+          "To": "End"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "text",
+            "Edges": [],
+            "Value": "Echo: "
+          }
+        ]
+      }
+    },
+    {
+      "Id": "End",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "templateText",
+          "To": "Start"
+        }
+      ],
+      "Value": "You said '{system:velocity}'. {node:Count} messages have been sent. {node:Time} seconds have passed."
+    },
+    {
+      "Id": "Count",
+      "Edges": [
+        {
+          "Id": "add",
+          "Action": "add",
+          "To": "Count"
+        }
+      ],
+      "Value": 0
+    },
+    {
+      "Id": "Time",
+      "Edges": [
+        {
+          "Id": "add",
+          "Action": "add",
+          "To": "Time"
+        },
+        {
+          "Id": "text",
+          "Action": "templateText",
+          "To": "{node:Time} seconds have passed."
+        }
+      ],
+      "Value": 0
+    }
+  ]
+}
