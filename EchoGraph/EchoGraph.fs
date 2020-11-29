@@ -3,6 +3,7 @@ open System
 open System.IO
 open ActionGraph
 open ActionGraph.Expressions
+open System.Linq
 
 module EchoGraph =
     let Definition =
@@ -12,30 +13,39 @@ module EchoGraph =
                     function(fromNode : Node, _ : Node, velocity, source) -> 
                             let vel = GraphConversions.HandleVelocity(velocity, 1);
                             GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a+vel))
-                            Console.WriteLine("Add walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
                 );
                 yield ("text",
                     function(fromNode : Node, _ : Node, velocity, _) ->
                             GraphConversions.actOnNodeByName(fromNode.Value, StringValue ("text"), fun a -> GraphConversions.actOnGraphLikeAsString(a.Value, fun b -> Console.WriteLine(b+velocity.ToString())))
                 );
                 yield ("templateText",
-                    function(fromNode : Node, _ : Node, velocity, source) ->
-                            GraphConversions.actOnNodeByName(fromNode.Value, StringValue ("text"), 
-                                fun a -> 
-                                    GraphConversions.actOnGraphLikeAsString(a.Value, 
-                                        fun b ->
-                                            if b.Contains("{node:count}") then
-                                                GraphConversions.actOnNodeByName(Graph(source), StringValue ("Count"), fun c ->
-                                                    GraphConversions.actOnGraphLikeAsInt(c.Value, fun d ->
-                                                            let output = b.Replace("{system:velocity}", velocity.ToString()).Replace("{node:count}",d.ToString())
-                                                            Console.WriteLine(output)
-                                                    )
-                                                )
-                                            else
-                                                let output = b.Replace("{system:velocity}", velocity.ToString())
-                                                Console.WriteLine(output)
+                    function(fromNode : Node, _ : Node, velocity, graph) ->
+                            let value = GraphConversions.collapseGraphLikeToString(fromNode.Value)
+                            match value with
+                            | Some v ->
+                                let mutable outputstring = v;
+                                //extract all templates from v
+                                let templates = v.Split("{", StringSplitOptions.RemoveEmptyEntries).Select(fun a ->
+                                    if(a.Contains("}")) then
+                                        a.Split("}", StringSplitOptions.RemoveEmptyEntries).First()
+                                    else
+                                        ""
                                     )
-                            )
+                                for template in templates do
+                                    if template.Contains(":") then
+                                        let splitplate = template.Split(":",StringSplitOptions.RemoveEmptyEntries)
+                                        match (splitplate.[0], splitplate.[1]) with
+                                        | ("node", _) & (var1, var2) -> 
+                                            match GraphConversions.getNodeByName(Graph(graph), StringValue(var2)) with
+                                                | Some a -> outputstring <- outputstring.Replace("{"+var1+":"+var2+"}",  GraphConversions.someOrDefault(GraphConversions.collapseGraphLikeToInt(a.Value), 0).ToString())
+                                                | None -> ()
+                                        | ("system", "velocity") & (var1, var2) -> outputstring <- outputstring.Replace("{"+var1+":"+var2+"}", GraphConversions.someOrDefault(GraphConversions.collapseGraphValueToString(velocity), "Type Cooercion Failed"))
+                                        | (_,_) -> ()
+                                            
+                                Console.WriteLine(outputstring);
+                                //
+                                //loop through templates
+                            | None -> ()
                 );
             })
         let graphDefinition = ActionGraph.Load(File.ReadAllText("echoGraph.json"), edgeFunctions)

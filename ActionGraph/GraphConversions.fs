@@ -1,9 +1,66 @@
 ﻿namespace ActionGraph
 
 module GraphConversions =
+//Some or default
+    let someOrDefault<'T>(some:Option<'T>, def) =
+        match some with
+        | Some a -> a
+        | _ -> def
+//Collapse graphlike to graph
+    let collapseGraphLikeToGraph(input:GraphLike) =
+        match input with
+            | Graph g -> Some(g)
+            | _ -> None
+    let actOnGraphLikeAsGraph(input:GraphLike, action) =
+        match input with
+        | Graph g -> action(g)
+        | _ -> ()
+//Collapse graphlike to graphvalue
+    let collapseGraphLikeToGraphValue(input:GraphLike) =
+        match input with
+            | GraphValue g -> Some(g)
+            | _ -> None
+    let actOnGraphLikeAsGraphValue(input:GraphLike, action) =
+        match input with
+        | GraphValue g -> action(g)
+        | _ -> ()
+//Collapse graphvalue to int
+    let collapseGraphValueToInt(input:GraphValue) =
+        match input with
+        | IntValue s -> Some(s)
+        | _ -> None
+    let actOnIntValue(input:GraphValue, action) =
+        match input with
+        | IntValue i -> action(i)
+        | _ -> ()
+//Collapse graphvalue to string
+    let collapseGraphValueToString(input:GraphValue) =
+        match input with
+        | StringValue s -> Some(s)
+        | _ -> None
+    let actOnStringValue(input:GraphValue, action) =
+        match input with
+        | StringValue i -> action(i)
+        | _ -> ()
+//Collapse graphlike to string
+    let collapseGraphLikeToString(input:GraphLike) =
+        let output = collapseGraphLikeToGraphValue(input)
+        match output with
+        | Some g -> collapseGraphValueToString(g)
+        | _ -> None
+    let actOnGraphLikeAsString(input:GraphLike, action) =
+        actOnGraphLikeAsGraphValue(input, fun a -> actOnStringValue(a, action))
+//Collapse graphlike to int
+    let collapseGraphLikeToInt(input:GraphLike) =
+        let output = collapseGraphLikeToGraphValue(input)
+        match output with
+        | Some g -> collapseGraphValueToInt(g)
+        | _ -> None
+    let actOnGraphLikeAsInt(input:GraphLike, action) =
+        actOnGraphLikeAsGraphValue(input, fun a -> actOnIntValue(a, action))
 //Graph has node
     let (|GraphHasNode|_|) (input:Graph, nodeId:GraphValue) = if input.Nodes.ContainsKey(nodeId) then Some(input.Nodes.[nodeId]) else None
-//Act on node by name in graphlike
+//Get node by name in graphlike
     let actOnNodeByName(input:GraphLike, targetNode:GraphValue, action) =
         match input with
         | Graph g -> 
@@ -11,33 +68,15 @@ module GraphConversions =
                 | GraphHasNode a -> action(a)
                 | _ -> ()
         | _ -> ()
-//Collapse graphlike to graph
-    let actOnGraphLikeAsGraph(input:GraphLike, action) =
-        match input with
-        | Graph g -> action(g)
-        | _ -> ()
-//Collapse graphlike to graphvalue
-    let actOnGraphLikeAsGraphValue(input:GraphLike, action) =
-        match input with
-        | GraphValue g -> action(g)
-        | _ -> ()
-//Collapse graphvalue to int
-    let actOnIntValue(input:GraphValue, action) =
-        match input with
-        | IntValue i -> action(i)
-        | _ -> ()
-//Collapse graphvalue to string
-    let actOnStringValue(input:GraphValue, action) =
-        match input with
-        | StringValue i -> action(i)
-        | _ -> ()
 
-//Collapse graphlike to string
-    let actOnGraphLikeAsString(input:GraphLike, action) =
-        actOnGraphLikeAsGraphValue(input, fun a -> actOnStringValue(a, action))
-//Collapse graphlike to int
-    let actOnGraphLikeAsInt(input:GraphLike, action) =
-        actOnGraphLikeAsGraphValue(input, fun a -> actOnIntValue(a, action))
+    let getNodeByName(input:GraphLike, targetNode:GraphValue) =
+        let output = collapseGraphLikeToGraph(input)
+        match output with
+        | Some g -> 
+            match (g,targetNode) with
+                | GraphHasNode a -> Some(a)
+                | _ -> None
+        | _ -> None
 
 //Assign int as GraphLike
     let assignIntAsGraphLike(input:int) =

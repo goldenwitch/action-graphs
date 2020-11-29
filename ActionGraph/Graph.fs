@@ -35,7 +35,6 @@ type Edge =
         Action : (Node * Node * GraphValue * Graph -> unit)
         To : GraphValue
     }
-
 and Node =
     {
         Id : GraphValue

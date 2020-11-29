@@ -28,15 +28,7 @@
           "To": "Start"
         }
       ],
-      "Value": {
-        "Nodes": [
-          {
-            "Id": "text",
-            "Edges": [],
-            "Value": "You said '{system:velocity}'. {node:count} messages have been sent."
-          }
-        ]
-      }
+      "Value": "You said '{system:velocity}'. {node:Count} messages have been sent. {node:Time} seconds have passed."
     },
     {
       "Id": "Count",
@@ -45,6 +37,22 @@
           "Id": "add",
           "Action": "add",
           "To": "Count"
+        }
+      ],
+      "Value": 0
+    },
+    {
+      "Id": "Time",
+      "Edges": [
+        {
+          "Id": "add",
+          "Action": "add",
+          "To": "Time"
+        },
+        {
+          "Id": "text",
+          "Action": "templateText",
+          "To": "{node:Time} seconds have passed."
         }
       ],
       "Value": 0
