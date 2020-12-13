@@ -20,12 +20,31 @@
             "Value": 12
           },
           {
+            "Id": "Ticks",
+            "Edges": [],
+            "Value": 0
+          },
+          {
+            "Id": "TicksAtLastNav",
+            "Edges": [],
+            "Value": 0
+          },
+          {
+            "Id": "TicksSinceLastNav",
+            "Edges": [],
+            "Value": 0
+          },
+          {
             "Id": 12,
             "Edges": [
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 1
+                "To": 1,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Twelve o' Clock"
@@ -36,7 +55,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 2
+                "To": 2,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "One o' Clock"
@@ -47,7 +70,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 3
+                "To": 3,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Two o' Clock"
@@ -58,7 +85,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 4
+                "To": 4,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Three o' Clock"
@@ -69,7 +100,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 5
+                "To": 5,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Four o' Clock"
@@ -80,7 +115,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 6
+                "To": 6,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Five o' Clock"
@@ -91,7 +130,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 7
+                "To": 7,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Six o' Clock"
@@ -102,7 +145,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 8
+                "To": 8,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Seven o' Clock"
@@ -113,7 +160,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 9
+                "To": 9,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Eight o' Clock"
@@ -124,7 +175,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 10
+                "To": 10,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Nine o' Clock"
@@ -135,7 +190,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 11
+                "To": 11,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Ten o' Clock"
@@ -146,7 +205,11 @@
               {
                 "Id": "navigate",
                 "Action": "navigate",
-                "To": 12
+                "To": 12,
+                "Condition": {
+                  "Term": 60,
+                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                }
               }
             ],
             "Value": "Eleven o' Clock"

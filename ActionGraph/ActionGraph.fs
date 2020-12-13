@@ -13,7 +13,7 @@ module ActionGraph =
         let (|StringToken|IntToken|) (input:JToken) =
                    if input.Type = JTokenType.Integer then IntToken 
                    else StringToken
-        let extractGraphValue (input: JToken) =
+        let extractGraphValue(input: JToken) =
             match input with
                 | IntToken -> IntValue(input.Value<int>())
                 | StringToken -> StringValue(input.ToString())
@@ -45,13 +45,30 @@ module ActionGraph =
                                                             }
                                                         yield (newEdge.Id, ExpressionEdge(newEdge))
                                                     | input ->
-                                                        let newEdge =
-                                                            {
-                                                                Id = extractGraphValue(edge.["Id"])
-                                                                Action = edge.["Action"].ToString()
-                                                                To = extractGraphValue(input)
-                                                            }
-                                                        yield (newEdge.Id, Edge(newEdge))
+                                                        match edge.["Condition"] with
+                                                        | null ->
+                                                            let newEdge =
+                                                                {
+                                                                    Id = extractGraphValue(edge.["Id"])
+                                                                    Action = edge.["Action"].ToString()
+                                                                    To = extractGraphValue(input)
+                                                                }
+                                                            yield (newEdge.Id, Edge(newEdge))
+                                                        | condition ->
+                                                            let newEdge =
+                                                                {
+                                                                    Id = extractGraphValue(edge.["Id"])
+                                                                    Condition =
+                                                                        {
+                                                                            Term = extractGraphValue(condition.["Term"])
+                                                                            Operator = Equals
+                                                                            FollowingTerm = extractGraphValue(condition.["FollowingTerm"])
+
+                                                                        }
+                                                                    Action = edge.["Action"].ToString()
+                                                                    To = extractGraphValue(input)
+                                                                }
+                                                            yield (newEdge.Id, ConditionalEdge(newEdge))
                                                 |]
                                             )
                                         Value = extractGraphLike(item.["Value"], lazy Some(newNode))
