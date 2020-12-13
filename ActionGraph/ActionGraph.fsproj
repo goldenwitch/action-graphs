@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Include="Graph.fs" />
     <Compile Include="GraphConversions.fs" />
+    <Compile Include="GraphExpressions.fs" />
+    <Compile Include="Edges.fs" />
     <Compile Include="ActionGraph.fs" />
     <Compile Include="ExpressionWalker.fs" />
   </ItemGroup>

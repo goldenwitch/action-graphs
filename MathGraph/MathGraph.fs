@@ -9,29 +9,37 @@ module MathGraph =
         let edgeFunctions =
             Map.ofSeq(seq{
                 yield ("add", 
-                    function(fromNode : Node, toNode: Node, velocity, _) -> 
-                            //If velocity is appropriate for math, use that, else use 1
-                            let vel = GraphConversions.HandleVelocity(velocity, 1);
-                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a+vel))
-                            Console.WriteLine("Add walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    ActionEdge(
+                        function(fromNode : Node, toNode: Node, velocity, _) -> 
+                                //If velocity is appropriate for math, use that, else use 1
+                                let vel = GraphConversions.HandleVelocity(velocity, 1);
+                                GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a+vel))
+                                Console.WriteLine("Add walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    )
                 );
                 yield ("subtract", 
-                    function(fromNode : Node, toNode: Node, velocity, _) -> 
-                            let vel = GraphConversions.HandleVelocity(velocity, 1);
-                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a-vel))
-                            Console.WriteLine("Subtract walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    ActionEdge(
+                        function(fromNode : Node, toNode: Node, velocity, _) -> 
+                                let vel = GraphConversions.HandleVelocity(velocity, 1);
+                                GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a-vel))
+                                Console.WriteLine("Subtract walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    )
                 );
                 yield ("multiply", 
-                    function(fromNode : Node, toNode: Node, velocity, _) -> 
-                            let vel = GraphConversions.HandleVelocity(velocity, 1);
-                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a*vel))
-                            Console.WriteLine("Multiply walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    ActionEdge(
+                        function(fromNode : Node, toNode: Node, velocity, _) -> 
+                                let vel = GraphConversions.HandleVelocity(velocity, 1);
+                                GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(a*vel))
+                                Console.WriteLine("Multiply walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    )
                 );
                 yield ("assign", 
-                    function(fromNode : Node, toNode: Node, velocity, _) -> 
-                            let vel = GraphConversions.HandleVelocity(velocity, 1);
-                            GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(vel))
-                            Console.WriteLine("Assigned walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    ActionEdge(
+                        function(fromNode : Node, toNode: Node, velocity, _) -> 
+                                let vel = GraphConversions.HandleVelocity(velocity, 1);
+                                GraphConversions.actOnGraphLikeAsInt(fromNode.Value, fun a -> fromNode.Value <- GraphConversions.assignIntAsGraphLike(vel))
+                                Console.WriteLine("Assigned walked with velocity "+vel.ToString()+", value at " + fromNode.Value.ToString())
+                    )
                 );
             })
         let graphDefinition = ActionGraph.Load(File.ReadAllText("mathGraph.json"), edgeFunctions)

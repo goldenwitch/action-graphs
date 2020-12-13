@@ -3,14 +3,7 @@ open System
 open Newtonsoft.Json.Linq
 
 module ActionGraph = 
-    let Load(jsonText, edgeFunctions : Map<string, (Node * Node * GraphValue * Graph -> unit)>) =
-        // If input matches our dictionary of edge functions
-        let (|Action|None|) (input) = if edgeFunctions.ContainsKey(input) then Action else None
-        let extractAction(input) =
-            match input with
-                | Action -> edgeFunctions.[input]
-                | None -> fun(input, output, velocity, graph) -> ()
-
+    let Load(jsonText, edgeFunctions : Map<string, EdgeAction>) =
         let json = JToken.Parse(jsonText)
 
         let (|GraphToken|StringToken|IntToken|) (input:JToken) =
@@ -20,40 +13,71 @@ module ActionGraph =
         let (|StringToken|IntToken|) (input:JToken) =
                    if input.Type = JTokenType.Integer then IntToken 
                    else StringToken
-        let extractGraphValue (input: JToken) =
+        let extractGraphValue(input: JToken) =
             match input with
                 | IntToken -> IntValue(input.Value<int>())
                 | StringToken -> StringValue(input.ToString())
-        let rec extractGraphLike (input:JToken) =
+        let rec extractGraphLike (input:JToken, parent) =
             match input with
-                | GraphToken -> parseGraph(input)
+                | GraphToken -> parseGraph(input, parent)
                 | IntToken -> GraphConversions.assignIntAsGraphLike(input.Value<int>())
                 | StringToken -> GraphConversions.assignStringAsGraphLike(input.ToString())
-        and parseGraph(input: JToken) =
-            Graph ({
+        and parseGraph(input: JToken, parent) =
+            let rec recursivelyGraph = {
                 Nodes = 
                     Map.ofSeq(
                         seq {
                             for item in input.["Nodes"] do
-                                let newNode =
+                                let rec newNode =
                                     {
+                                        Graph = lazy recursivelyGraph
+                                        Parent = parent
                                         Id = extractGraphValue(item.["Id"])
                                         Edges =
                                             Map.ofArray(
                                                 [| for edge in item.["Edges"] do
-                                                    let newEdge =
-                                                        {
-                                                            Id = extractGraphValue(edge.["Id"])
-                                                            Action = extractAction(edge.["Action"].Value<String>())
-                                                            To = extractGraphValue(edge.["To"])
-                                                        }
-                                                    yield (newEdge.Id, newEdge)
+                                                    match edge.["To"] with
+                                                    | null -> 
+                                                        let newEdge =
+                                                            {
+                                                                Id = extractGraphValue(edge.["Id"])
+                                                                Action = edge.["Action"].ToString()
+                                                            }
+                                                        yield (newEdge.Id, ExpressionEdge(newEdge))
+                                                    | input ->
+                                                        match edge.["Condition"] with
+                                                        | null ->
+                                                            let newEdge =
+                                                                {
+                                                                    Id = extractGraphValue(edge.["Id"])
+                                                                    Action = edge.["Action"].ToString()
+                                                                    To = extractGraphValue(input)
+                                                                }
+                                                            yield (newEdge.Id, Edge(newEdge))
+                                                        | condition ->
+                                                            let newEdge =
+                                                                {
+                                                                    Id = extractGraphValue(edge.["Id"])
+                                                                    Condition =
+                                                                        {
+                                                                            Term = extractGraphValue(condition.["Term"])
+                                                                            Operator = Equals
+                                                                            FollowingTerm = extractGraphValue(condition.["FollowingTerm"])
+
+                                                                        }
+                                                                    Action = edge.["Action"].ToString()
+                                                                    To = extractGraphValue(input)
+                                                                }
+                                                            yield (newEdge.Id, ConditionalEdge(newEdge))
                                                 |]
                                             )
-                                        Value = extractGraphLike(item.["Value"])
+                                        Value = extractGraphLike(item.["Value"], lazy Some(newNode))
                                     }
                                 yield (newNode.Id, newNode)
                         }
                     )
-            })
-        parseGraph(json)
+                EdgeActions =
+                    edgeFunctions
+            }
+            Graph(recursivelyGraph)
+        parseGraph(json, lazy None)

@@ -1,6 +1,7 @@
 ﻿namespace ActionGraph
 open System
-open Newtonsoft.Json.Linq
+open System.Text
+open System.Linq
 
 type GraphValue =
     | StringValue of string
@@ -32,30 +33,71 @@ type GraphValue =
 type Edge =
     {
         Id : GraphValue
-        Action : (Node * Node * GraphValue * Graph -> unit)
+        Action : String
         To : GraphValue
     }
-and Node =
+type ExpressionEdge =
     {
         Id : GraphValue
-        Edges : Map<GraphValue, Edge>
+        Action : String //Replace with 'Action' Type later, that validates the incoming string and offers debug messages
+    }
+type Operator =
+| Equals
+type Condition =
+    {
+        Term : GraphValue
+        Operator : Operator
+        FollowingTerm : GraphValue
+    }
+type ConditionalEdge =
+    {
+        Id : GraphValue
+        Condition : Condition
+        Action : String
+        To : GraphValue
+    }
+type EdgeLike =
+| Edge of Edge
+| ExpressionEdge of ExpressionEdge
+| ConditionalEdge of ConditionalEdge
+    member x.Action =
+        match x with
+        | Edge a  -> a.Action
+        | ExpressionEdge a -> a.Action
+        | ConditionalEdge a -> a.Action
+and Node =
+    {
+        Graph: Lazy<Graph>
+        Parent: Lazy<Option<Node>>
+        Id : GraphValue
+        Edges : Map<GraphValue, EdgeLike>
         mutable Value : GraphLike
     }
+
+    override this.ToString() =
+        this.Id.ToString()
+
+and EdgeAction =
+| ActionEdge of (Node * Node * GraphValue * Graph -> unit)
+| FunctionEdge of (Node * Node * GraphValue * Graph -> Node)
 and Graph =
     {
         Nodes : Map<GraphValue, Node>
+        EdgeActions : Map<String, EdgeAction>
     }
 
-    member this.WalkEdge(fromNode : GraphValue, edge : GraphValue) =
-        //Handle case where edge is a function, needs to pass velocity to action
-        let edgeId = edge.Id
+    override this.ToString() =
+        let stringBuilder = new StringBuilder()
+        for node in this.Nodes do
+            stringBuilder.Append(node.Key.ToString()+", ")
+            |> ignore
+        stringBuilder.ToString()
 
-        if this.Nodes.[fromNode].Edges.ContainsKey(edgeId) then
-            let targetEdge = this.Nodes.[fromNode].Edges.[edgeId]
-            targetEdge.Action(this.Nodes.[fromNode], this.Nodes.[targetEdge.To], edge.Velocity, this)
-            this.Nodes.[targetEdge.To]
-        else
-            this.Nodes.[fromNode]
 and GraphLike =
     | GraphValue of GraphValue
     | Graph of Graph
+
+    override this.ToString() =
+        match this with
+        | GraphValue g -> g.ToString()
+        | Graph g -> g.ToString()

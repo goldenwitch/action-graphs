@@ -1,4 +1,5 @@
 ﻿namespace ActionGraph
+open ActionGraph.Edges
 
 module Expressions = 
     type Walker =
