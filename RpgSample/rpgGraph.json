@@ -1,0 +1,223 @@
+﻿{
+  "Nodes": [
+    {
+      "Id": "Start",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "text",
+          "To": "Challenger"
+        }
+      ],
+      "Value": "A challenger approaches! Do you attack them (fight), or do you flee (flee)"
+    },
+    {
+      "Id": "Challenger",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "query"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "fight",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<SwordOrShield"
+              }
+            ],
+            "Value": "You attack the challenger! (press enter to continue)"
+          },
+          {
+            "Id": "flee",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "You flee! Thanks for playing! (press enter to restart)"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "SwordOrShield",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "text",
+          "To": "Encounter"
+        }
+      ],
+      "Value": "Your opponent eyes you warily, gripping their spear with knuckles grim and white. Do you strike them with your sword (sword), or raise your shield (shield) to block their incoming stab!?"
+    },
+    {
+      "Id": "Encounter",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "query"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "sword",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<SwordResult"
+              }
+            ],
+            "Value": "You choose to swing your blade! (press enter to continue)"
+          },
+          {
+            "Id": "shield",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<ShieldResult"
+              }
+            ],
+            "Value": "You choose to hold up your shield! (press enter to continue)"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "ShieldResult",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "any"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": 0,
+            "Edges": [
+              {
+                "Id": "any",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "Raising your shield, you go to deflect the incoming spear strike. Unfortunately, your shield is too slow and the spear reaches your throat before you can bash it out of the way. You have died. (Press enter to restart)"
+          },
+          {
+            "Id": 1,
+            "Edges": [
+              {
+                "Id": "any",
+                "Action": "text",
+                "To": "<Disarmed"
+              }
+            ],
+            "Value": "Your shield finds the tip of their spear, deflecting the blow and jolting the spear out of their hands. (press enter to continue)"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "SwordResult",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "any"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": 0,
+            "Edges": [
+              {
+                "Id": "any",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "Your sword cuts through the air, missing your challenger, but you aren't so lucky! Their spear impales you, and you have died. (Press enter to restart)"
+          },
+          {
+            "Id": 1,
+            "Edges": [
+              {
+                "Id": "any",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "Your strike is true, but your opponent's spear thrust pushes your blade aside as it enters your heart. You have died! (Press enter to restart)"
+          },
+          {
+            "Id": 2,
+            "Edges": [
+              {
+                "Id": "any",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "With an ugly squelch, your sword passes through your challengers' lungs. Your victory brings you no joy, but better you than them. (Press enter to restart)"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "Disarmed",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "text",
+          "To": "Choice"
+        }
+      ],
+      "Value": "Now that your opponent has been disarmed, you have a choice. Do you spare (spare) them now that they are no longer a threat? Or do you kill (kill) them, knowing that they are but a weapon away from challenging you again?"
+    },
+    {
+      "Id": "Choice",
+      "Edges": [
+        {
+          "Id": "text",
+          "Action": "query"
+        }
+      ],
+      "Value": {
+        "Nodes": [
+          {
+            "Id": "spare",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "Let noone die in vain. Today your challenger lives. Thanks for playing. (press enter to restart)"
+          },
+          {
+            "Id": "kill",
+            "Edges": [
+              {
+                "Id": "queryText",
+                "Action": "text",
+                "To": "<Start"
+              }
+            ],
+            "Value": "The blade itself incites the hand to violence. Thanks for playing. (press enter to restart)"
+          }
+        ]
+      }
+    }
+  ]
+}
