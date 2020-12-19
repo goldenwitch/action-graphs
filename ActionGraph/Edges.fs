@@ -70,7 +70,7 @@ module Edges =
                     //two steps to parents parent's neighbor(p2n) <<p2n
                     let target = GraphExpressions.ParseTarget(s)
                     let targetNode = GraphExpressions.WalkTargetExpression(fromNode, target)
-                    doWalk(StringValue(target.Target), targetNode.Graph.Force())
+                    doWalk(targetNode.Id, targetNode.Graph.Force())
                 | _ ->
                     doWalk(a.To, graph)
             | ExpressionEdge a -> 

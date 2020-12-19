@@ -5,11 +5,11 @@
       "Edges": [
         {
           "Id": "start",
-          "Action": "start"
+          "Action": "[]start"
         },
         {
           "Id": "stop",
-          "Action": "stop"
+          "Action": "[]stop"
         }
       ],
       "Value": {
@@ -43,7 +43,7 @@
                 "To": 1,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -58,7 +58,7 @@
                 "To": 2,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -73,7 +73,7 @@
                 "To": 3,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -88,7 +88,7 @@
                 "To": 4,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -103,7 +103,7 @@
                 "To": 5,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -118,7 +118,7 @@
                 "To": 6,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -133,7 +133,7 @@
                 "To": 7,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -148,7 +148,7 @@
                 "To": 8,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -163,7 +163,7 @@
                 "To": 9,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -178,7 +178,7 @@
                 "To": 10,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -193,7 +193,7 @@
                 "To": 11,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
@@ -208,7 +208,7 @@
                 "To": 12,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
                 }
               }
             ],
