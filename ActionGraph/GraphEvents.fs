@@ -5,28 +5,32 @@ open System
 module GraphEvents =
     let DefaultEventActions =
         Map.ofSeq(seq{
-            yield ("assignFrom", //Only works on graphs of strings, uses velocity as id for nodes to walk
+            yield ("assignFrom",
                 function(fromNode : Node, toNode: Node, observingNode: Node, velocity:GraphValue, graph:Graph) ->
                         observingNode.Value <- fromNode.Value
                         ()
             );
-            yield ("assignFromToId", //Only works on graphs of strings, uses velocity as id for nodes to walk
+            yield ("assignFromToId",
                 function(fromNode : Node, toNode: Node, observingNode: Node, velocity:GraphValue, graph:Graph) ->
                         observingNode.Value <- GraphValue(toNode.Id)
                         ()
             );
-            yield ("text", //Only works on graphs of strings, uses velocity as id for nodes to walk
+            yield ("text",
                 function(fromNode : Node, toNode: Node, observingNode: Node, velocity:GraphValue, graph:Graph) ->
                         Console.WriteLine(observingNode.Value.ToString())
                         ()
             );
-            yield ("increment", //Only works on graphs of strings, uses velocity as id for nodes to walk
+            yield ("increment",
                 function(fromNode : Node, toNode: Node, observingNode: Node, velocity:GraphValue, graph:Graph) ->
                         match GraphConversions.collapseGraphLikeToInt(observingNode.Value) with
                         | Some g -> 
                             observingNode.Value <- GraphConversions.assignIntAsGraphLike(g+1)
                         | None -> ()
                         ()
+            );
+            yield ("zero",
+                function(fromNode : Node, toNode: Node, observingNode: Node, velocity:GraphValue, graph:Graph) ->
+                        observingNode.Value <- GraphConversions.assignIntAsGraphLike(0)
             );
         })
     let DefaultEventLog =

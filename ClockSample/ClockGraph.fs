@@ -48,14 +48,6 @@ module ClockGraph =
                         seq{
                             yield ("Navigate", 
                                 function(input : Walker, _) ->
-                                        match GraphConversions.collapseGraphLikeToInt(graph.Nodes.[StringValue("Ticks")].Value) with
-                                        | Some g -> 
-                                            GraphConversions.actOnGraphLikeAsInt(graph.Nodes.[StringValue("TicksAtLastNav")].Value,
-                                                fun(j) ->
-                                                    graph.Nodes.[StringValue("TicksSinceLastNav")].Value <- GraphConversions.assignIntAsGraphLike(g-j)
-                                                )
-                                        | None -> ()
-                                        ()
                                         input.Walk(graph, "tick.navigate")
                             )
                         }
@@ -90,14 +82,6 @@ module ClockGraph =
                 yield ("navigate",
                     ActionEdge(
                         function(valueNode, _, _, graph) -> 
-                                match valueNode.Parent.Value with
-                                | Some n -> 
-                                    GraphConversions.actOnGraphLikeAsInt(graph.Nodes.[StringValue("Ticks")].Value, 
-                                        fun(i) ->
-                                            graph.Nodes.[StringValue("TicksAtLastNav")].Value <- GraphConversions.assignIntAsGraphLike(i)
-
-                                    )
-                                | None -> ()
                                 GraphConversions.actOnGraphLikeAsString(valueNode.Value, 
                                     fun a -> Console.WriteLine("It is now "+a)
                                 )

@@ -66,6 +66,54 @@
               {
                 "EventTarget": "[#1]tick",
                 "Action": "increment"
+              },
+              {
+                "EventTarget": "[#12]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#11]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#10]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#9]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#8]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#7]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#6]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#5]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#4]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#3]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#2]navigate",
+                "Action": "zero"
+              },
+              {
+                "EventTarget": "[#1]navigate",
+                "Action": "zero"
               }
             ]
           },
@@ -173,16 +221,6 @@
             ]
           },
           {
-            "Id": "TicksAtLastNav",
-            "Edges": [],
-            "Value": 0
-          },
-          {
-            "Id": "TicksSinceLastNav",
-            "Edges": [],
-            "Value": 0
-          },
-          {
             "Id": 12,
             "Edges": [
               {
@@ -195,7 +233,7 @@
                 "To": 1,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -214,7 +252,7 @@
                 "To": 2,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -233,7 +271,7 @@
                 "To": 3,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -252,7 +290,7 @@
                 "To": 4,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -271,7 +309,7 @@
                 "To": 5,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -290,7 +328,7 @@
                 "To": 6,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -309,7 +347,7 @@
                 "To": 7,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -328,7 +366,7 @@
                 "To": 8,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -347,7 +385,7 @@
                 "To": 9,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -366,7 +404,7 @@
                 "To": 10,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -385,7 +423,7 @@
                 "To": 11,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
@@ -404,7 +442,7 @@
                 "To": 12,
                 "Condition": {
                   "Term": 60,
-                  "FollowingTerm": "{node:[]TicksSinceLastNav}"
+                  "FollowingTerm": "{node:[Ticks]}"
                 }
               }
             ],
