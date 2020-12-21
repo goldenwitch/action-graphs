@@ -65,6 +65,13 @@ type EdgeLike =
         | Edge a  -> a.Action
         | ExpressionEdge a -> a.Action
         | ConditionalEdge a -> a.Action
+and GraphEvent =
+    {
+        ObserverNode: Node
+        EventTarget: string
+        Action: string
+    }
+
 and Node =
     {
         Graph: Lazy<Graph>
@@ -77,13 +84,34 @@ and Node =
     override this.ToString() =
         this.Id.ToString()
 
-and EdgeAction =
-| ActionEdge of (Node * Node * GraphValue * Graph -> unit)
-| FunctionEdge of (Node * Node * GraphValue * Graph -> Node)
-and Graph =
+and 
+    [<CustomEquality>]
+    [<NoComparison>]
+    EdgeAction =
+        | ActionEdge of (Node * Node * GraphValue * Graph -> unit)
+        | FunctionEdge of (Node * Node * GraphValue * Graph -> Node)
+
+         override x.Equals(b) =
+            true
+and 
+    [<CustomEquality>]
+    [<NoComparison>]
+    EventAction =
+        | EventAction of Map<string, (Node * Node * Node * GraphValue * Graph -> unit)>
+
+        override x.Equals(b) =
+            true 
+and EventLog =
+    {
+        mutable Events: list<GraphEvent>
+        EventActions: EventAction
+    }
+and 
+    Graph =
     {
         Nodes : Map<GraphValue, Node>
         EdgeActions : Map<String, EdgeAction>
+        EventLog: EventLog
     }
 
     override this.ToString() =

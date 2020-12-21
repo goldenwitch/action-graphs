@@ -1,43 +1,15 @@
 ﻿namespace ActionGraph
+
+open ActionGraph.GraphEvents
+
 module Edges =
-    let templateFunctions =
-        Map.ofSeq(seq {
-        //need to add walk:velocity, this:value
-            yield ("node",
-                fun(targetValue:string, fromNode:Node, graph: Graph, velocity:GraphValue) ->
-                    let targetingExpression = GraphExpressions.ParseTarget(targetValue)
-                    let targetNode = GraphExpressions.WalkTargetExpression(fromNode, targetingExpression)
-                    //Since the action we are doing in this case is resolving the graph node, we need to do some gymnastics to handle neighbors
-                    let value = targetNode.Graph.Value.Nodes.[StringValue(targetingExpression.Target)].Value
-                    GraphConversions.collapseGraphLikeToGraphValue(value)
-            );
-            yield ("walk",
-                fun(targetValue, fromNode:Node, graph: Graph, velocity:GraphValue) ->
-                    match targetValue with
-                    | "velocity" -> Some(velocity)
-                    | _ -> Some(StringValue(targetValue))
-            );
-            yield ("this",
-                fun(targetValue, fromNode:Node, graph: Graph, velocity:GraphValue) ->
-                    match targetValue with
-                    | "Value" -> Some(StringValue(fromNode.Value.ToString()))
-                    | "Id" -> Some(fromNode.Id)
-                    | _ -> Some(StringValue(targetValue))
-            );
-        }
-        )
     let rec Walk(x, fromNode:Node, graph: Graph, velocity:GraphValue) =
             match x with
             | ConditionalEdge a ->
-                //Check whether condition is valid
-                let evaluateTemplate(term, termOption:Option<Template>) =
-                    match termOption with
-                    | Some t -> templateFunctions.[t.TargetType](t.TargetValue, fromNode, graph, velocity)
-                    | None -> Some(term)
                 let termTemplate = GraphExpressions.ParseTemplate(a.Condition.Term)
                 let followingTermTemplate = GraphExpressions.ParseTemplate(a.Condition.FollowingTerm)
-                let termValue = evaluateTemplate(a.Condition.Term, termTemplate)
-                let followingTermValue = evaluateTemplate(a.Condition.FollowingTerm, followingTermTemplate)
+                let termValue = GraphExpressions.EvaluateTemplate(a.Condition.Term, termTemplate, fromNode, graph, velocity)
+                let followingTermValue = GraphExpressions.EvaluateTemplate(a.Condition.FollowingTerm, followingTermTemplate, fromNode, graph, velocity)
                 if(termValue = followingTermValue) then
                     //if it is, downconvert to edge and walk
                     let downEdge =
@@ -55,19 +27,16 @@ module Edges =
                         match targetGraph.EdgeActions.[a.Action] with 
                         | ActionEdge e ->
                             e(fromNode, targetGraph.Nodes.[toNode], velocity, targetGraph)
+                            graph.EventLog.ProcessEvent(fromNode, targetGraph.Nodes.[toNode], velocity, a.Id, graph)
                             targetGraph.Nodes.[toNode]
-                        | FunctionEdge e -> e(fromNode, targetGraph.Nodes.[toNode], velocity, targetGraph)
+                        | FunctionEdge e -> 
+                            let returnnode = e(fromNode, targetGraph.Nodes.[toNode], velocity, targetGraph)
+                            graph.EventLog.ProcessEvent(fromNode, targetGraph.Nodes.[toNode], velocity, a.Id, graph)
+                            returnnode
                     else
                         fromNode
                 match a.To with
                 | StringValue s ->
-                    //Cases
-                    //one step to child node child>child --pass but redundant
-                    //two steps to childs child child1>child2>child2 --pass but redundant
-                    //one step to parent <parent
-                    //one step to parents neighbor <neighbor
-                    //two steps to parents(p1) parent(p2) <<parent2
-                    //two steps to parents parent's neighbor(p2n) <<p2n
                     let target = GraphExpressions.ParseTarget(s)
                     let targetNode = GraphExpressions.WalkTargetExpression(fromNode, target)
                     doWalk(targetNode.Id, targetNode.Graph.Force())
@@ -75,14 +44,18 @@ module Edges =
                     doWalk(a.To, graph)
             | ExpressionEdge a -> 
                 let target = GraphExpressions.ParseTarget(x.Action)
-                if(graph.EdgeActions.ContainsKey(target.Target)) then
+                if(graph.EdgeActions.ContainsKey(target.Target.ToString())) then
                     let targetNode = GraphExpressions.WalkTargetExpression(fromNode,target)
                     //call registered edge
-                    match graph.EdgeActions.[target.Target] with 
+                    match graph.EdgeActions.[target.Target.ToString()] with 
                     | ActionEdge e -> 
-                        e(targetNode,targetNode, velocity, graph)
+                        e(fromNode,targetNode, velocity, graph)
+                        graph.EventLog.ProcessEvent(fromNode, targetNode, velocity, a.Id, graph)
                         targetNode
-                    | FunctionEdge e -> e(targetNode, targetNode, velocity, graph)
+                    | FunctionEdge e ->
+                        let returnnode = e(fromNode, targetNode, velocity, graph)
+                        graph.EventLog.ProcessEvent(targetNode, returnnode, velocity, a.Id, graph)
+                        returnnode
                 else
                     fromNode
     let WalkEdge(this: Graph, fromNode : GraphValue, edge : GraphValue) =

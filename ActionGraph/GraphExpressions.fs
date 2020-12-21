@@ -2,9 +2,15 @@
 open System.Linq
 open System.Text
 
+//Consider generalizable expression library
+//"Count of symbol" -> ... = 3 ...
+//"Cons list" -> [a, [b, [c]]]
+//"tail" -> _)tail where ) can be replaced by any termination symbol
+
 //Forbidden chars to fix with better pattern recognition
 // : inside of template strings
 // { and } near template strings
+// # forbidden inside of ids
 //Cases
 //node targeting
 //[] = me = no steps
@@ -24,13 +30,13 @@ type NavEnum =
     | Neighbor
 type NavStep =
     | Up
-    | Down of string
-    | Neighbor of string
+    | Down of GraphValue
+    | Neighbor of GraphValue
     | End
 type TargetingExpression =
     {
         NavSteps : seq<NavStep>
-        Target : string
+        Target : GraphValue
     }
 type Template =
     {
@@ -60,16 +66,28 @@ module GraphExpressions =
         | Some a -> //If we already have a nav we are carrying, [ indicates that we are done, and can add this step to our output, but also populate carrynav with down. ] indicates we have our final result
             if input.Head = ']' then
                 match a with
-                | NavEnum.Down -> 
-                    Down(carryString) :: output
+                | NavEnum.Down ->
+                    if(carryString.First() = '#') then
+                        Down(IntValue(carryString.Substring(1,carryString.Length-1) |> int)) :: output
+                    else
+                        Down(StringValue(carryString)) :: output
                 | NavEnum.Neighbor ->
-                    Neighbor(carryString) :: output
+                    if(carryString.First() = '#') then
+                        Neighbor(IntValue(carryString.Substring(1,carryString.Length-1) |> int)) :: output
+                    else
+                        Neighbor(StringValue(carryString)) :: output
             else if input.Head = '[' then
                 match a with
-                | NavEnum.Down -> 
-                    ParseSpecificNodeIdentifier(input.Tail, Down(carryString) :: output, (Some(NavEnum.Down), ""))
+                | NavEnum.Down ->
+                    if(carryString.First() = '#') then
+                        ParseSpecificNodeIdentifier(input.Tail, Down(IntValue(carryString.Substring(1,carryString.Length-1) |> int)) :: output, (Some(NavEnum.Down), ""))
+                    else
+                        ParseSpecificNodeIdentifier(input.Tail, Down(StringValue(carryString)) :: output, (Some(NavEnum.Down), ""))
                 | NavEnum.Neighbor ->
-                    ParseSpecificNodeIdentifier(input.Tail, Neighbor(carryString) :: output, (Some(NavEnum.Down), ""))
+                    if(carryString.First() = '#') then
+                        ParseSpecificNodeIdentifier(input.Tail, Neighbor(IntValue(carryString.Substring(1,carryString.Length-1) |> int)) :: output, (Some(NavEnum.Down), ""))
+                    else
+                        ParseSpecificNodeIdentifier(input.Tail, Neighbor(StringValue(carryString)) :: output, (Some(NavEnum.Down), ""))
             else
                 ParseSpecificNodeIdentifier(input.Tail, output, (carryNav, carryString+input.Head.ToString()))
         | None -> //if we don't yet have a carry, look for ] to indicate we have our final result
@@ -91,9 +109,16 @@ module GraphExpressions =
         let snoclist = List.rev(conslist)
         let tailBuilder = new StringBuilder()
         let tail = System.String(ParseTail(snoclist, tailBuilder).ToString().Reverse().ToArray())
+        let tailValue = 
+            match tail with
+            | "" -> StringValue(tail)
+            | _ ->
+                match tail.First() with
+                | '#' -> IntValue(tail.Substring(1, tail.Length-1) |> int)
+                | _ -> StringValue(tail)
         {
             NavSteps = Seq.ofList(List.rev(ParseSpecificNodeIdentifier(remaininglist.Tail, navsteps, (None, ""))))
-            Target = tail
+            Target = tailValue
         }
 
     let WalkTargetExpression(startNode, target) =
@@ -107,9 +132,9 @@ module GraphExpressions =
             | Down a -> 
                 match targetNode.Value with
                 | GraphValue g -> failwith "Attempted navigation to child node from a node with a non-graph value."
-                | Graph g -> targetNode <- g.Nodes.[StringValue(a)]
+                | Graph g -> targetNode <- g.Nodes.[a]
             | Neighbor a -> 
-                targetNode <- targetNode.Graph.Value.Nodes.[StringValue(a)]
+                targetNode <- targetNode.Graph.Value.Nodes.[a]
             | End -> ()
         targetNode
     let ParseTemplate(input:GraphValue) =
@@ -125,3 +150,59 @@ module GraphExpressions =
                 })
             | _ -> None
         | None -> None
+    
+    let DefaultTemplateFunctions =
+        Map.ofSeq(seq {
+        //need to add walk:velocity, this:value
+            yield ("node",
+                fun(targetValue:string, fromNode:Node, graph: Graph, velocity:GraphValue) ->
+                    let targetingExpression = ParseTarget(targetValue)
+                    let targetNode = WalkTargetExpression(fromNode, targetingExpression)
+                    GraphConversions.collapseGraphLikeToGraphValue(targetNode.Value)
+            );
+            yield ("walk",
+                fun(targetValue, fromNode:Node, graph: Graph, velocity:GraphValue) ->
+                    match targetValue with
+                    | "velocity" -> Some(velocity)
+                    | _ -> Some(StringValue(targetValue))
+            );
+            yield ("this",
+                fun(targetValue, fromNode:Node, graph: Graph, velocity:GraphValue) ->
+                    match targetValue with
+                    | "Value" -> Some(StringValue(fromNode.Value.ToString()))
+                    | "Id" -> Some(fromNode.Id)
+                    | _ -> Some(StringValue(targetValue))
+            );
+        }
+        )
+    //Check whether condition is valid
+    let EvaluateTemplate(term, termOption:Option<Template>, fromNode:Node, graph: Graph, velocity:GraphValue) =
+        match termOption with
+        | Some t -> DefaultTemplateFunctions.[t.TargetType](t.TargetValue, fromNode, graph, velocity)
+        | None -> Some(term)
+
+    let ReplaceTemplates(input:string, fromNode:Node, graph: Graph, velocity:GraphValue) =
+        //Find and replace all templates with their values
+        //generate tuples of template+value
+        //split on {
+        let templates = input.Split('{')
+        //Every odd index will contain a template
+        let tuples = seq {
+            for candidate in 1 .. templates.Length-1 do
+                //split these odd indexes on }
+                    let template = templates.[candidate].Split('}')
+                    //The 0th index will contain the template
+                    //wrap it in {}
+                    let key = "{"+template.[0]+"}"
+                    //pass it to the parser
+                    //pass it to the evaluator
+                    let value = EvaluateTemplate(StringValue(key), ParseTemplate(StringValue(key)), fromNode, graph, velocity)
+                    match value with
+                    | Some s -> yield (key,s) //add a key,value to the sequence
+                    | None -> ()
+        }
+        let mutable outputString = input;
+        //loop through sequence and find and replace the templates
+        for (a,b) in tuples do
+            outputString <- outputString.Replace(a.ToString(),b.ToString())
+        outputString

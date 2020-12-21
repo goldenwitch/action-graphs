@@ -6,18 +6,10 @@
         {
           "Id": "text",
           "Action": "text",
-          "To": "End"
+          "To": "[End]"
         }
       ],
-      "Value": {
-        "Nodes": [
-          {
-            "Id": "text",
-            "Edges": [],
-            "Value": "Echo: "
-          }
-        ]
-      }
+      "Value": "Hello World"
     },
     {
       "Id": "End",
@@ -25,37 +17,25 @@
         {
           "Id": "text",
           "Action": "templateText",
-          "To": "Start"
+          "To": "[Start]"
         }
       ],
-      "Value": "You said '{system:velocity}'. {node:Count} messages have been sent. {node:Time} seconds have passed."
+      "Value": "You said '{walk:velocity}'. {node:[Count]} messages have been sent."
     },
     {
       "Id": "Count",
-      "Edges": [
+      "Edges": [],
+      "Value": 0,
+      "Events": [
         {
-          "Id": "add",
-          "Action": "add",
-          "To": "Count"
-        }
-      ],
-      "Value": 0
-    },
-    {
-      "Id": "Time",
-      "Edges": [
-        {
-          "Id": "add",
-          "Action": "add",
-          "To": "Time"
+          "EventTarget": "[Start]text",
+          "Action": "increment"
         },
         {
-          "Id": "text",
-          "Action": "templateText",
-          "To": "{node:Time} seconds have passed."
+          "EventTarget": "[End]text",
+          "Action": "increment"
         }
-      ],
-      "Value": 0
+      ]
     }
   ]
 }

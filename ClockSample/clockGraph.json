@@ -15,14 +15,162 @@
       "Value": {
         "Nodes": [
           {
-            "Id": "Value",
-            "Edges": [],
-            "Value": 12
-          },
-          {
             "Id": "Ticks",
             "Edges": [],
-            "Value": 0
+            "Value": 0,
+            "Events": [
+              {
+                "EventTarget": "[#12]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#11]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#10]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#9]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#8]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#7]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#6]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#5]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#4]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#3]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#2]tick",
+                "Action": "increment"
+              },
+              {
+                "EventTarget": "[#1]tick",
+                "Action": "increment"
+              }
+            ]
+          },
+          {
+            "Id": "Value",
+            "Edges": [],
+            "Value": 12,
+            "Events": [
+              {
+                "EventTarget": "[#12]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#11]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#10]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#9]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#8]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#7]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#6]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#5]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#4]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#3]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#2]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#1]navigate",
+                "Action": "assignFromToId"
+              },
+              {
+                "EventTarget": "[#12]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#11]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#10]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#9]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#8]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#7]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#6]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#5]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#4]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#3]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#2]navigate",
+                "Action": "text"
+              },
+              {
+                "EventTarget": "[#1]navigate",
+                "Action": "text"
+              }
+            ]
           },
           {
             "Id": "TicksAtLastNav",
@@ -37,6 +185,10 @@
           {
             "Id": 12,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
@@ -53,6 +205,10 @@
             "Id": 1,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 2,
@@ -67,6 +223,10 @@
           {
             "Id": 2,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
@@ -83,6 +243,10 @@
             "Id": 3,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 4,
@@ -97,6 +261,10 @@
           {
             "Id": 4,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
@@ -113,6 +281,10 @@
             "Id": 5,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 6,
@@ -127,6 +299,10 @@
           {
             "Id": 6,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
@@ -143,6 +319,10 @@
             "Id": 7,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 8,
@@ -157,6 +337,10 @@
           {
             "Id": 8,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
@@ -173,6 +357,10 @@
             "Id": 9,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 10,
@@ -188,6 +376,10 @@
             "Id": 10,
             "Edges": [
               {
+                "Id": "tick",
+                "Action": "[]event"
+              },
+              {
                 "Id": "navigate",
                 "Action": "navigate",
                 "To": 11,
@@ -202,6 +394,10 @@
           {
             "Id": 11,
             "Edges": [
+              {
+                "Id": "tick",
+                "Action": "[]event"
+              },
               {
                 "Id": "navigate",
                 "Action": "navigate",
