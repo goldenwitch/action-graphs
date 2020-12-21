@@ -9,11 +9,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MathGraph", "MathGraph\Math
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "EchoGraph", "EchoGraph\EchoGraph.fsproj", "{55BE7002-3EF2-4229-834B-1C754A96FD2C}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TestClient", "..\action-graph-clients\ConsoleClientF\TestClient.fsproj", "{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ClockSample", "ClockSample\ClockSample.fsproj", "{C028CB30-1012-4E2B-BA4D-DB8A70F89D17}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RpgSample", "RpgSample\RpgSample.fsproj", "{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "RpgSample", "RpgSample\RpgSample.fsproj", "{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55BE7002-3EF2-4229-834B-1C754A96FD2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE5DF58D-CBE4-4B46-B7B0-0B657F10867C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C028CB30-1012-4E2B-BA4D-DB8A70F89D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C028CB30-1012-4E2B-BA4D-DB8A70F89D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C028CB30-1012-4E2B-BA4D-DB8A70F89D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
