@@ -1,11 +1,12 @@
 ﻿namespace ActionGraph
 open System
+open ActionGraph.GraphEvents
 open Newtonsoft.Json.Linq
 
 module ActionGraph = 
     let Load(jsonText, edgeFunctions : Map<string, EdgeAction>) =
         let json = JToken.Parse(jsonText)
-
+        let eventLog = GraphEvents.DefaultEventLog
         let (|GraphToken|StringToken|IntToken|) (input:JToken) =
             if input.Type = JTokenType.Object then GraphToken 
             else if input.Type = JTokenType.Integer then IntToken 
@@ -73,11 +74,23 @@ module ActionGraph =
                                             )
                                         Value = extractGraphLike(item.["Value"], lazy Some(newNode))
                                     }
+                                match item.["Events"] with
+                                | null -> ()
+                                | events ->
+                                    for event in events do
+                                        eventLog.AddEvent(
+                                            {
+                                                ObserverNode = newNode
+                                                EventTarget = event.["EventTarget"].ToString()
+                                                Action = event.["Action"].ToString()
+                                            }
+                                        )
                                 yield (newNode.Id, newNode)
                         }
                     )
                 EdgeActions =
                     edgeFunctions
+                EventLog = eventLog
             }
             Graph(recursivelyGraph)
         parseGraph(json, lazy None)

@@ -48,21 +48,7 @@ module ClockGraph =
                         seq{
                             yield ("Navigate", 
                                 function(input : Walker, _) ->
-                                        //grab id from current node
-                                        let nodeId = input.CurrentNode.Id
-                                        //Update value node with stored id as value
-                                        graph.Nodes.[StringValue("Value")].Value <- GraphValue(nodeId)
-                                        //Increment tick count
-                                        match GraphConversions.collapseGraphLikeToInt(graph.Nodes.[StringValue("Ticks")].Value) with
-                                        | Some g -> 
-                                            graph.Nodes.[StringValue("Ticks")].Value <- GraphConversions.assignIntAsGraphLike(g+1)
-                                            GraphConversions.actOnGraphLikeAsInt(graph.Nodes.[StringValue("TicksAtLastNav")].Value,
-                                                fun(j) ->
-                                                    graph.Nodes.[StringValue("TicksSinceLastNav")].Value <- GraphConversions.assignIntAsGraphLike(g-j)
-                                                )
-                                        | None -> ()
-                                        input.Walk(graph, "navigate")
-                                        ()
+                                        input.Walk(graph, "tick.navigate")
                             )
                         }
                     )
@@ -96,18 +82,17 @@ module ClockGraph =
                 yield ("navigate",
                     ActionEdge(
                         function(valueNode, _, _, graph) -> 
-                                match valueNode.Parent.Value with
-                                | Some n -> 
-                                    GraphConversions.actOnGraphLikeAsInt(graph.Nodes.[StringValue("Ticks")].Value, 
-                                        fun(i) ->
-                                            graph.Nodes.[StringValue("TicksAtLastNav")].Value <- GraphConversions.assignIntAsGraphLike(i)
-
-                                    )
-                                | None -> ()
                                 GraphConversions.actOnGraphLikeAsString(valueNode.Value, 
                                     fun a -> Console.WriteLine("It is now "+a)
                                 )
                                 
+                    )
+                );
+                yield ("event",
+                    FunctionEdge(
+                        function(valueNode, _, _, _) -> 
+                                valueNode
+                            
                     )
                 );
             })
