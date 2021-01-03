@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "graph": {
+      "type": "object",
+      "properties": {
+        "Nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node"
+          },
+          "default": []
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "Edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/edge"
+          },
+          "default": []
+        },
+        "Value": {
+          "anyOf": [
+            {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "$ref": "#/definitions/graph"
+            }
+          ]
+        },
+        "Events": {
+          "items": {
+            "type": "object",
+            "properties": {
+              "EventTarget": {
+                "type": "string"
+              },
+              "Action": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "edge": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "Action": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "Action": {
+              "type": "string"
+            },
+            "To": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "Condition": {
+              "type": "object",
+              "properties": {
+                "Term": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "FollowingTerm": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "#/definitions/graph"
+}
