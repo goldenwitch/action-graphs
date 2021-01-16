@@ -6,14 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="rpgGraph.json">
+    <Content Include="textAdventure.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="RpgGraph.fs" />
+    <Compile Include="TextAdventure.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
-  <ItemGroup />
 
   <ItemGroup>
     <ProjectReference Include="..\ActionGraph\ActionGraph.fsproj" />

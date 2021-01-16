@@ -16,5 +16,5 @@ module RpgGraph =
                 yield! Prebuilts.ConsoleEdges;
                 yield! Prebuilts.SubgraphEdges;
             })
-        let graphDefinition = ActionGraph.Load(File.ReadAllText("rpgGraph.json"), edgeFunctions)
+        let graphDefinition = ActionGraph.Load(File.ReadAllText("textAdventure.json"), edgeFunctions)
         graphDefinition
