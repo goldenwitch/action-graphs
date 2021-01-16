@@ -5,7 +5,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "text",
+          "Action": "console.text",
           "To": "[Challenger]"
         }
       ],
@@ -16,7 +16,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "[]query"
+          "Action": "[]subgraph.query"
         }
       ],
       "Value": {
@@ -26,7 +26,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[SwordOrShield]"
               }
             ],
@@ -37,7 +37,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -51,7 +51,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "text",
+          "Action": "console.text",
           "To": "[Encounter]"
         }
       ],
@@ -62,7 +62,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "[]query"
+          "Action": "[]subgraph.query"
         }
       ],
       "Value": {
@@ -72,7 +72,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[SwordResult]"
               }
             ],
@@ -83,7 +83,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[ShieldResult]"
               }
             ],
@@ -97,7 +97,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "[]any"
+          "Action": "[]subgraph.any"
         }
       ],
       "Value": {
@@ -107,7 +107,7 @@
             "Edges": [
               {
                 "Id": "any",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -118,7 +118,7 @@
             "Edges": [
               {
                 "Id": "any",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Disarmed]"
               }
             ],
@@ -132,7 +132,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "[]any"
+          "Action": "[]subgraph.any"
         }
       ],
       "Value": {
@@ -142,7 +142,7 @@
             "Edges": [
               {
                 "Id": "any",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -153,7 +153,7 @@
             "Edges": [
               {
                 "Id": "any",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -164,7 +164,7 @@
             "Edges": [
               {
                 "Id": "any",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -178,7 +178,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "text",
+          "Action": "console.text",
           "To": "[Choice]"
         }
       ],
@@ -189,7 +189,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "[]query"
+          "Action": "[]subgraph.query"
         }
       ],
       "Value": {
@@ -199,7 +199,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],
@@ -210,7 +210,7 @@
             "Edges": [
               {
                 "Id": "queryText",
-                "Action": "text",
+                "Action": "console.text",
                 "To": ".[Start]"
               }
             ],

@@ -2,7 +2,7 @@
 
 open System
 open ActionGraph
-open RpgSample
+open ActionGraph.TextAdventureSample
 open ActionGraph.Expressions
 
 let consoleLoop (graph, walker:Walker, args:string) =

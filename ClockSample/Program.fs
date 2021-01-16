@@ -2,7 +2,7 @@
 
 open System
 open ActionGraph
-open ClockSample
+open ActionGraph.ClockSample
 open ActionGraph.Expressions
 
 let consoleLoop (graph, walker:Walker, args:string) =
