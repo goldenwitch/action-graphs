@@ -16,7 +16,7 @@ let rec result(graph, walker) =
 
 [<EntryPoint>]
 let main argv =
-    let graph = GraphConversions.collapseGraphLikeToGraph(RpgGraph.Definition)
+    let graph = RpgGraph.Definition
     match graph with
     | Some g -> 
         let playerWalker = 

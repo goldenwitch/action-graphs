@@ -25,7 +25,7 @@
     {
       "Id": "Count",
       "Edges": [],
-      "Value": 0,
+      "Value": 1,
       "Events": [
         {
           "EventTarget": "[Start]text",
