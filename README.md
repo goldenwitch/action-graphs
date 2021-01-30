@@ -5,13 +5,13 @@
 *** See the bottom of this document for the declaration of the reference variables
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
-
+-->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
--->
+
 
 
 <!-- PROJECT LOGO -->
@@ -211,14 +211,14 @@ Please open github issues if you run into any grief.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/goldenwitch/repo.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/goldenwitch/action-graphs.svg?style=for-the-badge
 [contributors-url]: https://github.com/goldenwitch/action-graphs/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/goldenwitch/repo.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/goldenwitch/action-graphs.svg?style=for-the-badge
 [forks-url]: https://github.com/goldenwitch/action-graphs/network/members
-[stars-shield]: https://img.shields.io/github/stars/goldenwitch/repo.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/goldenwitch/action-graphs.svg?style=for-the-badge
 [stars-url]: https://github.com/goldenwitch/action-graphs/stargazers
-[issues-shield]: https://img.shields.io/github/issues/goldenwitch/repo.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/goldenwitch/action-graphs.svg?style=for-the-badge
 [issues-url]: https://github.com/goldenwitch/action-graphs/issues
-[license-shield]: https://img.shields.io/github/license/goldenwitch/repo.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/goldenwitch/action-graphs.svg?style=for-the-badge
 [license-url]: https://github.com/goldenwitch/action-graphs/blob/main/LICENSE.txt
 [reference-url]: https://github.com/goldenwitch/action-graphs/blob/main/reference.md
