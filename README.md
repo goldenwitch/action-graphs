@@ -101,7 +101,7 @@ Add a reference to the Action-Graphs library.
 
 ### Secondly...
 Define your graph in json.
-```json
+```javascript
 {
   //Your top level graph definition
   "Nodes": [
