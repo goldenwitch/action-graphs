@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Graph.fs" />
+    <Compile Include="GraphConversions.fs" />
+    <Compile Include="GraphExpressions.fs" />
+    <Compile Include="GraphEvents.fs" />
+    <Compile Include="Edges.fs" />
+    <Compile Include="ActionGraph.fs" />
+    <Compile Include="ExpressionWalker.fs" />
+    <Compile Include="Prebuilts.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
