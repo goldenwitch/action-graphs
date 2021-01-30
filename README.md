@@ -21,14 +21,15 @@
   </a>
 
   <h3 align="center">Action-Graphs</h3>
+  <p align="center">Current Version: 0.0.0</p>
 
   <p align="center">
-    Model the world in composable graphs to rapidly create conversational experiences, state machines, and asynchronous workflows (or whatever else you can dream up!)
+    Model the world in composable graphs to rapidly create state machines, asynchronous workflows, and conversational experiences (or whatever else you can dream up!)
     <br />
-    <a href="https://github.com/goldenwitch/action-graphs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/goldenwitch/action-graphs/blob/main/reference.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/goldenwitch/action-graphs">View Demo</a>
+    <a href="https://github.com/goldenwitch/action-graphs">View Demo (in progress)</a>
     ·
     <a href="https://github.com/goldenwitch/action-graphs/issues">Report Bug</a>
     ·
@@ -52,12 +53,11 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#f-sharp-quickstart">F# Quickstart</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -65,8 +65,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 We offer a library for defining and operating over mixed type, composable graphs. Most graph definitions treat graphs as a pure data model, sticking to scholastic definitions where the graphs contain the same kinds of values and the most complicated edges are simply weights.
 
@@ -91,9 +89,9 @@ The library is built on .net core 3.1 and written in F#.
 2. Open and build the .sln
 
 <!-- USAGE EXAMPLES -->
-## F# Quickstart
+## F-sharp Quickstart
 
-Write hello world in graphs in three simple steps!
+Write hello world with graph oriented programming in three simple steps!
 
 ### First...
 Create a new F# console app. 
@@ -174,7 +172,7 @@ let main argv =
 
 <img src="images/QuickstartConsoleScreeny.png" alt="Console log screenshot">
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://github.com/goldenwitch/action-graphs/blob/main/reference.md)_
 
 
 
@@ -210,10 +208,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Please open github issues if you run into any grief.
 
-Project Link: [https://github.com/goldenwitch/action-graphs](https://github.com/goldenwitch/action-graphs)
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/goldenwitch/repo.svg?style=for-the-badge
@@ -226,5 +220,4 @@ Project Link: [https://github.com/goldenwitch/action-graphs](https://github.com/
 [issues-url]: https://github.com/goldenwitch/action-graphs/issues
 [license-shield]: https://img.shields.io/github/license/goldenwitch/repo.svg?style=for-the-badge
 [license-url]: https://github.com/goldenwitch/action-graphs/blob/main/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/goldenwitch
+[reference-url]: https://github.com/goldenwitch/action-graphs/blob/main/reference.md
