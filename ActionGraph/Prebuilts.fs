@@ -58,7 +58,10 @@
                         function(fromNode : Node, _, velocity, _) ->
                                 match GraphConversions.collapseGraphLikeToGraph(fromNode.Value) with
                                     | Some a -> 
-                                        a.WalkEdge(velocity, StringValue("queryText"))
+                                        if a.Nodes.ContainsKey(velocity) then
+                                            a.WalkEdge(velocity, StringValue("queryText"))
+                                        else
+                                            fromNode
                                     | None -> fromNode
                     )
                 );
