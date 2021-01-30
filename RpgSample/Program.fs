@@ -2,7 +2,7 @@
 
 open System
 open ActionGraph
-open RpgSample
+open ActionGraph.TextAdventureSample
 open ActionGraph.Expressions
 
 let consoleLoop (graph, walker:Walker, args:string) =
@@ -16,7 +16,7 @@ let rec result(graph, walker) =
 
 [<EntryPoint>]
 let main argv =
-    let graph = GraphConversions.collapseGraphLikeToGraph(RpgGraph.Definition)
+    let graph = RpgGraph.Definition
     match graph with
     | Some g -> 
         let playerWalker = 

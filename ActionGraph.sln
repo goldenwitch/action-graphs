@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ActionGraph", "ActionGraph\ActionGraph.fsproj", "{057FA674-4C58-40C0-A0B5-67AF7689A3B1}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "EchoGraph", "EchoGraph\EchoGraph.fsproj", "{55BE7002-3EF2-4229-834B-1C754A96FD2C}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "EchoSample", "EchoGraph\EchoSample.fsproj", "{55BE7002-3EF2-4229-834B-1C754A96FD2C}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ClockSample", "ClockSample\ClockSample.fsproj", "{C028CB30-1012-4E2B-BA4D-DB8A70F89D17}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "RpgSample", "RpgSample\RpgSample.fsproj", "{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TextAdventureSample", "RpgSample\TextAdventureSample.fsproj", "{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

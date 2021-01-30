@@ -14,6 +14,7 @@
     <Compile Include="Edges.fs" />
     <Compile Include="ActionGraph.fs" />
     <Compile Include="ExpressionWalker.fs" />
+    <Compile Include="Prebuilts.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,8 @@
-﻿namespace ClockSample
+﻿namespace ActionGraph.ClockSample
 open ActionGraph.Expressions
 open ActionGraph
 open System.Threading.Tasks
 open System.IO
-open System
 
 module ClockGraph =
     type FSMWalker =
@@ -58,7 +57,7 @@ module ClockGraph =
     let Definition =
         let edgeFunctions =
             Map.ofSeq(seq{
-                yield ("start", //Only works on fsm graph nodes
+                yield ("Clock.start", //Only works on fsm graph nodes
                     ActionEdge(
                         function(fromNode : Node, _, velocity, _) ->
                                 match GraphConversions.collapseGraphLikeToGraph(fromNode.Value) with
@@ -70,7 +69,7 @@ module ClockGraph =
                                     | None -> ()
                     )
                 );
-                yield ("stop", //Only works on fsm graph nodes
+                yield ("Clock.stop", //Only works on fsm graph nodes
                     ActionEdge(
                         function(fromNode : Node, _, velocity, _) ->
                                 match GraphConversions.collapseGraphLikeToGraph(fromNode.Value) with
@@ -79,22 +78,7 @@ module ClockGraph =
                                     | None -> ()
                     )
                 );
-                yield ("navigate",
-                    ActionEdge(
-                        function(valueNode, _, _, graph) -> 
-                                GraphConversions.actOnGraphLikeAsString(valueNode.Value, 
-                                    fun a -> Console.WriteLine("It is now "+a)
-                                )
-                                
-                    )
-                );
-                yield ("event",
-                    FunctionEdge(
-                        function(valueNode, _, _, _) -> 
-                                valueNode
-                            
-                    )
-                );
+                yield! Prebuilts.SystemEdges
             })
         let graphDefinition = ActionGraph.Load(File.ReadAllText("clockGraph.json"), edgeFunctions)
         graphDefinition

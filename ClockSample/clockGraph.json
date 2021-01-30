@@ -5,11 +5,11 @@
       "Edges": [
         {
           "Id": "start",
-          "Action": "[]start"
+          "Action": "[]Clock.start"
         },
         {
           "Id": "stop",
-          "Action": "[]stop"
+          "Action": "[]Clock.stop"
         }
       ],
       "Value": {
@@ -225,11 +225,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 1,
                 "Condition": {
                   "Term": 60,
@@ -244,11 +244,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 2,
                 "Condition": {
                   "Term": 60,
@@ -263,11 +263,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 3,
                 "Condition": {
                   "Term": 60,
@@ -282,11 +282,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 4,
                 "Condition": {
                   "Term": 60,
@@ -301,11 +301,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 5,
                 "Condition": {
                   "Term": 60,
@@ -320,11 +320,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 6,
                 "Condition": {
                   "Term": 60,
@@ -339,11 +339,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 7,
                 "Condition": {
                   "Term": 60,
@@ -358,11 +358,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 8,
                 "Condition": {
                   "Term": 60,
@@ -377,11 +377,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 9,
                 "Condition": {
                   "Term": 60,
@@ -396,11 +396,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 10,
                 "Condition": {
                   "Term": 60,
@@ -415,11 +415,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 11,
                 "Condition": {
                   "Term": 60,
@@ -434,11 +434,11 @@
             "Edges": [
               {
                 "Id": "tick",
-                "Action": "[]event"
+                "Action": "[]system.stay"
               },
               {
                 "Id": "navigate",
-                "Action": "navigate",
+                "Action": "system.navigate",
                 "To": 12,
                 "Condition": {
                   "Term": 60,

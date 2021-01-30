@@ -5,7 +5,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "text",
+          "Action": "console.text",
           "To": "[End]"
         }
       ],
@@ -16,7 +16,7 @@
       "Edges": [
         {
           "Id": "text",
-          "Action": "templateText",
+          "Action": "console.templateText",
           "To": "[Start]"
         }
       ],
@@ -25,7 +25,7 @@
     {
       "Id": "Count",
       "Edges": [],
-      "Value": 0,
+      "Value": 1,
       "Events": [
         {
           "EventTarget": "[Start]text",

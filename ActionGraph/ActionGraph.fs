@@ -93,4 +93,4 @@ module ActionGraph =
                 EventLog = eventLog
             }
             Graph(recursivelyGraph)
-        parseGraph(json, lazy None)
+        GraphConversions.collapseGraphLikeToGraph(parseGraph(json, lazy None))

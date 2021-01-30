@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="clockGraph.json">
+    <Content Include="textAdventure.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="ClockGraph.fs" />
+    <Compile Include="TextAdventure.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
