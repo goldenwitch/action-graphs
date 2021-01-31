@@ -1,57 +1,26 @@
 # Understanding Action-Graphs
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <ol>
-    <li>
-      <a href="#anatomy-of-an-action-graph">Anatomy of an Action-Graph</a>
-        <ul>
-            <li>
-                <a href="#prerequisites">Graphs</a>
-                <ul>
-                    <li>
-                        <a href="#installation">Nodes</a>
-                        <ul>
-                            <li>
-                                <a href="#installation">Values</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#installation">Contextual Node Targeting</a>
-                    </li>
-                    <li>
-                        <a href="#installation">Edges</a>
-                        <ul>
-                            <li>
-                                <a href="#installation">Actions</a>
-                            </li>
-                            <li>
-                                <a href="#installation">Conditions</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#installation">Events</a>
-                        <ul>
-                            <li>
-                                <a href="#installation">Event Actions</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#prerequisites">Walkers</a>
-                <ul>
-                    <li>
-                        <a href="#prerequisites"> Expressions</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <a href="#common-patterns">Common Patterns</a>
-  </ol>
+
+- [Anatomy of an Action-Graph](#anatomy-of-an-action-graph)
+  * [Quick references](#quick-references)
+  * [Graphs](#graphs)
+    + [Nodes](#nodes)
+      - [Values](#values)
+    + [Hierarchical Graph Terminology](#hierarchical-graph-terminology)
+    + [Contextual Node Targeting](#contextual-node-targeting)
+    + [Edges](#edges)
+      - [Actions](#actions)
+      - [Conditions](#conditions)
+    + [Events](#events)
+  * [Walkers](#walkers)
+    + [Expressions](#expressions)
+- [Common Patterns](#common-patterns)
+  * [Text input pattern](#text-input-pattern)
+  * [State node pattern](#state-node-pattern)
+  * [Sub-graph pattern](#sub-graph-pattern)
+    + [Async sub-graph pattern](#async-sub-graph-pattern)
+  * [Event ticker pattern](#event-ticker-pattern)
 </details>
 
 ## Anatomy of an Action-Graph

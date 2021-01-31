@@ -79,7 +79,7 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 The library is built on .net core 3.1 and written in F#.
-* <a href="https://dotnet.microsoft.com/download"><strong>.Net Core 3.1</strong></a>
+* <a href="https://dotnet.microsoft.com/download/dotnet-core/3.1"><strong>.NET Core 3.1 SDK</strong></a>
 
 ### Installation
 
@@ -87,7 +87,12 @@ The library is built on .net core 3.1 and written in F#.
    ```sh
    git clone https://github.com/goldenwitch/action-graphs.git
    ```
-2. Open and build the .sln
+2. Build ActionGraph.sln:
+    - Using Visual Studio
+      1. Open ActionGraph.sln and build
+    - Using .NET Core CLI
+      1. Go to project folder
+      2. Run `dotnet build ActionGraph.sln`
 
 <!-- USAGE EXAMPLES -->
 ## F-sharp Quickstart
