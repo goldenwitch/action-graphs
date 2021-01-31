@@ -1,0 +1,19 @@
+name: PullRequest
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+    - name: Build - Debug
+      run: dotnet build $GITHUB_WORKSPACE/ActionGraph.sln --configuration Debug
+    - name: Build - Release
+      run: dotnet build $GITHUB_WORKSPACE/ActionGraph.sln --configuration Release
