@@ -18,7 +18,7 @@ let rec result(graph, walker) =
 let main argv =
     let graph = RpgGraph.Definition
     match graph with
-    | Some g -> 
+    | Some g ->
         let playerWalker = 
             {
                 CurrentNode = g.Nodes.[StringValue "Start"]
@@ -26,5 +26,4 @@ let main argv =
         playerWalker.Walk(g, "text")
         result(g, playerWalker)
     | None -> ()
-
     0 // return an integer exit code

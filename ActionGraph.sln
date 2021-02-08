@@ -11,6 +11,10 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ClockSample", "ClockSample\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TextAdventureSample", "RpgSample\TextAdventureSample.fsproj", "{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}"
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ActionGraph.Projections", "ActionGraph.Projections\ActionGraph.Projections.fsproj", "{20241B06-4A46-4F0C-AE3B-05ED1CAD3FCD}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Actiongraph-CLI", "actiongraph-cli\Actiongraph-CLI.fsproj", "{335FF681-7AE9-4052-B91E-C5B74BFF8311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2085EDDD-4C31-4F00-970A-E5FA0EA32F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20241B06-4A46-4F0C-AE3B-05ED1CAD3FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20241B06-4A46-4F0C-AE3B-05ED1CAD3FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20241B06-4A46-4F0C-AE3B-05ED1CAD3FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20241B06-4A46-4F0C-AE3B-05ED1CAD3FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335FF681-7AE9-4052-B91E-C5B74BFF8311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335FF681-7AE9-4052-B91E-C5B74BFF8311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335FF681-7AE9-4052-B91E-C5B74BFF8311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335FF681-7AE9-4052-B91E-C5B74BFF8311}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

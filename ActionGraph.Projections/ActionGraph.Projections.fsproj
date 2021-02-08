@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ProjectionTypes.fs" />
+    <Compile Include="Reproject.fs" />
+    <Compile Include="Mermaid.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ActionGraph\ActionGraph.fsproj" />
+  </ItemGroup>
+
+</Project>
