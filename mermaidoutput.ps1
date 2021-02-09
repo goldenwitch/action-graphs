@@ -15,6 +15,9 @@ cd actiongraph-cli\bin\Debug\netcoreapp3.1
 .\actiongraph-cli mermaid clockGraph.json clockGraph.txt
 .\actiongraph-cli mermaid textAdventure.json textAdventure.txt
 .\actiongraph-cli mermaid echoGraph.json echoGraph.txt
+.\actiongraph-cli mermaid clockGraph.json clockGraph.md
+.\actiongraph-cli mermaid textAdventure.json textAdventure.md
+.\actiongraph-cli mermaid echoGraph.json echoGraph.md
 # Fourth, call mermaid-cli to svg all of the mermaid files
 npm install @mermaid-js/mermaid-cli
 npx mmdc -i clockGraph.txt -o clockGraph.svg
@@ -23,6 +26,9 @@ npx mmdc -i echoGraph.txt -o echoGraph.svg
 
 # Fifth, manually do things to get these into github XD
 cd ..\..\..\..
+copy actiongraph-cli\bin\Debug\netcoreapp3.1\clockGraph.md ClockSample\
+copy actiongraph-cli\bin\Debug\netcoreapp3.1\textAdventure.md RpgSample\
+copy actiongraph-cli\bin\Debug\netcoreapp3.1\echoGraph.md EchoGraph\
 copy actiongraph-cli\bin\Debug\netcoreapp3.1\clockGraph.svg ClockSample\
 copy actiongraph-cli\bin\Debug\netcoreapp3.1\textAdventure.svg RpgSample\
 copy actiongraph-cli\bin\Debug\netcoreapp3.1\echoGraph.svg EchoGraph\

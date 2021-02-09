@@ -65,6 +65,11 @@ type EdgeLike =
         | Edge a  -> a.Action
         | ExpressionEdge a -> a.Action
         | ConditionalEdge a -> a.Action
+    member x.Id =
+        match x with
+        | Edge a  -> a.Id
+        | ExpressionEdge a -> a.Id
+        | ConditionalEdge a -> a.Id
 and GraphEvent =
     {
         ObserverNode: Node
