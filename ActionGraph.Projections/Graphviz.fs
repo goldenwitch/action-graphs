@@ -7,16 +7,16 @@ open ActionGraph.Projections.ProjectionTypes
 open ActionGraph.Projections
 open System.IO
 
-//Mermaid is slightly broken as of 8.8.4 and won't correctly render the edges. It gives up somewhere in there.
-module Mermaid =
-    let ReprojectTo(graph: Graph, direction) =
+
+module Graphviz =
+    let ReprojectTo(graph: Graph) =
         let quotes(value) = "\""+value+"\""
         let globalNodeName(node:Node) =
             let rec appendParent(nodeCursor, parents) =
                 match nodeCursor.Parent.Value with
                 | Some n -> n.Id.ToString() :: parents
                 | None -> parents
-            String.concat "." (appendParent(node, [node.Id.ToString()]));
+            String.concat "." (appendParent(node, [node.Id.ToString()]))
         let rec rules = seq{
             yield GraphRule(
                 function(iterGraph) ->
@@ -28,7 +28,8 @@ module Mermaid =
                         ) then 
                             None
                         else
-                            Some(StringOut("flowchart "+direction+";"))
+                            Some(WrapperOut(Some(StringOut("digraph root {compound=true;")),Some(StringOut("}")))
+                )
                             
             );
             yield NodeRule(
@@ -39,20 +40,19 @@ module Mermaid =
                         //Recurse if we have a subgraph
                             let name = globalNodeName(node);
                             Some(SeqOut(seq {
-                                yield Some(StringOut("subgraph "+quotes(name)));
+                                yield Some(StringOut("subgraph "+quotes("cluster"+name)+" {label="+ quotes(name)+";"));
                                 let subgraph = Reproject.Transform(g, rules);
                                 yield! subgraph;
-                                yield Some(StringOut("end"));
+                                yield Some(StringOut("}"));
                             }))
-                        | _ -> Some(StringOut(globalNodeName(node)+";"))
-                        
+                        | _ -> Some(StringOut(quotes(globalNodeName(node))+";"))
             );
             yield EdgeRule(
                 function(node, edge) ->
                         //handle each type of edge
                         let output(edgedestination, edgeid) =
                             Some(
-                                EndStringOut(globalNodeName(node)+"-->|"+edgeid+"|"+globalNodeName(edgedestination)+";")
+                                EndStringOut(quotes(globalNodeName(node))+"->"+quotes(globalNodeName(edgedestination))+" [taillabel=\""+edgeid+"\"];")
                             )
                         let toGraphOutput(edgedestination, graphid, edgeid) =
                              //If our edge goes to a graph node, we should instead write an edge to the cluster
@@ -61,8 +61,8 @@ module Mermaid =
                             )
                         let handleGraphNode(toNode) =
                             match toNode.Value with
-                            //| Graph g ->
-                            //    toGraphOutput(g.Nodes.First().Value, toNode, edge.Id.ToString())
+                            | Graph g ->
+                                toGraphOutput(g.Nodes.First().Value, toNode, edge.Id.ToString())
                             | _ -> output(toNode, edge.Id.ToString())
                         match edge with
                         | Edge e -> 
@@ -82,6 +82,7 @@ module Mermaid =
                                 else
                                     handleGraphNode(walkedNode)
                             | _ -> handleGraphNode(walkedNode)
+                            
             );
         }
         Reproject.Transform(
@@ -91,12 +92,9 @@ module Mermaid =
     let ProjectionToFile(projection:seq<Option<ProjectionOutput>>, outputFilePath:string) =
         //loop through projection and append all strings
         let fileName = outputFilePath
-        let fileType = outputFilePath.Split(".").LastOrDefault()
         let mutable wrapperList = []
         File.Delete(fileName);
-        File.AppendAllLines(fileName, seq {
-            if fileType = "md" then
-                yield "```mermaid";
+        File.AppendAllLines(fileName, 
             let rec handleProjection(inputProj) =
                 seq {
                     for item in inputProj do
@@ -122,8 +120,6 @@ module Mermaid =
                                 | None -> ()
                         | None -> ()
                 }
-            yield! handleProjection(projection)
-        })
+            handleProjection(projection)
+        )
         File.AppendAllLines(fileName, Seq.ofList(wrapperList))
-        if fileType = "md" then
-             File.AppendAllLines(fileName, seq {yield "```"})

@@ -8,6 +8,7 @@
     <Compile Include="ProjectionTypes.fs" />
     <Compile Include="Reproject.fs" />
     <Compile Include="Mermaid.fs" />
+    <Compile Include="Graphviz.fs" />
   </ItemGroup>
 
   <ItemGroup>

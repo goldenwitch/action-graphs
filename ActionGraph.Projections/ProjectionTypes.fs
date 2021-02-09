@@ -5,6 +5,9 @@ open ActionGraph
 module ProjectionTypes =
     type ProjectionOutput =
         | StringOut of string
+        | EndStringOut of string
+        | SeqOut of seq<Option<ProjectionOutput>>
+        | WrapperOut of Option<ProjectionOutput> * Option<ProjectionOutput>
     type ProjectionRule =
         | GraphRule of (Graph -> Option<ProjectionOutput>)
         | NodeRule of (Node -> Option<ProjectionOutput>)

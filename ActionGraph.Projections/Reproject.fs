@@ -29,8 +29,4 @@ module Reproject =
                         match item with
                         | EdgeRule e -> yield e(node.Value, edge.Value);
                         | _ -> ()
-            //  if node is a graph, recurse
-                match GraphConversions.collapseGraphLikeToGraph(node.Value.Value) with    
-                | Some g -> yield! Transform(g,rules)
-                | None -> ()
         }

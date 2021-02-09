@@ -61,9 +61,14 @@ module ClockGraph =
                     ActionEdge(
                         function(fromNode : Node, _, velocity, _) ->
                                 match GraphConversions.collapseGraphLikeToGraph(fromNode.Value) with
-                                    | Some a -> 
+                                    | Some a ->
+                                        let intVelocity = 
+                                            match GraphConversions.collapseGraphValueToInt(velocity) with
+                                            | Some i -> i
+                                            | None -> 100
+
                                         //instantiate FSM walker with stopped as current node
-                                        let walker = LoadWalker(a, a.Nodes.[IntValue 12], 100)
+                                        let walker = LoadWalker(a, a.Nodes.[IntValue 12], intVelocity)
                                         //walk navigate
                                         walker.Walk(a)
                                     | None -> ()
