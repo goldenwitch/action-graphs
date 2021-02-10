@@ -88,42 +88,51 @@ module Mermaid =
             graph, 
             rules
         )
+    let ProjectionToStrings(projection:seq<Option<ProjectionOutput>>) =
+        let mutable wrapperList = []
+        seq {
+            let top = seq {
+                let rec handleProjection(inputProj) =
+                    seq {
+                        for item in inputProj do
+                            match item with
+                            | Some i ->
+                                match i with
+                                | StringOut s -> yield s;
+                                | SeqOut s ->
+                                    yield! handleProjection(s)
+                                | EndStringOut s -> wrapperList <- s :: wrapperList
+                                | WrapperOut (h, t) ->
+                                    match h with
+                                    | Some outValue ->
+                                        match outValue with
+                                        | StringOut outString -> yield outString;
+                                        | _ -> ()
+                                    | None -> ()
+                                    match t with
+                                    | Some outValue ->
+                                        match outValue with
+                                        | StringOut outString -> wrapperList <- outString :: wrapperList
+                                        | _ -> ()
+                                    | None -> ()
+                            | None -> ()
+                    }
+                yield! handleProjection(projection)
+            }
+            yield! top;
+            let bottom = Seq.ofList(wrapperList);
+            yield! bottom;
+        }
     let ProjectionToFile(projection:seq<Option<ProjectionOutput>>, outputFilePath:string) =
         //loop through projection and append all strings
         let fileName = outputFilePath
         let fileType = outputFilePath.Split(".").LastOrDefault()
-        let mutable wrapperList = []
         File.Delete(fileName);
-        File.AppendAllLines(fileName, seq {
+        let fileSeq = seq {
             if fileType = "md" then
                 yield "```mermaid";
-            let rec handleProjection(inputProj) =
-                seq {
-                    for item in inputProj do
-                        match item with
-                        | Some i ->
-                            match i with
-                            | StringOut s -> yield s;
-                            | SeqOut s ->
-                                yield! handleProjection(s)
-                            | EndStringOut s -> wrapperList <- s :: wrapperList
-                            | WrapperOut (h, t) ->
-                                match h with
-                                | Some outValue ->
-                                    match outValue with
-                                    | StringOut outString -> yield outString;
-                                    | _ -> ()
-                                | None -> ()
-                                match t with
-                                | Some outValue ->
-                                    match outValue with
-                                    | StringOut outString -> wrapperList <- outString :: wrapperList
-                                    | _ -> ()
-                                | None -> ()
-                        | None -> ()
-                }
-            yield! handleProjection(projection)
-        })
-        File.AppendAllLines(fileName, Seq.ofList(wrapperList))
-        if fileType = "md" then
-             File.AppendAllLines(fileName, seq {yield "```"})
+            yield! ProjectionToStrings(projection);
+            if fileType = "md" then
+                yield "```"
+        }
+        File.AppendAllLines(fileName, fileSeq)
