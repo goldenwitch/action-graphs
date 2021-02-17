@@ -90,22 +90,27 @@ and Node =
         this.Id.ToString()
 
 and 
-    [<CustomEquality>]
-    [<NoComparison>]
+    [<CustomEquality;NoComparison>]
     EdgeAction =
         | ActionEdge of (Node * Node * GraphValue * Graph -> unit)
         | FunctionEdge of (Node * Node * GraphValue * Graph -> Node)
-
-         override x.Equals(b) =
-            true
+        override this.Equals(other) = 
+            match other with 
+            | :? EdgeAction as e -> match e with 
+                                    | ActionEdge(_) -> (match this with | ActionEdge(_) -> true | _ -> false)
+                                    | FunctionEdge(_) -> (match this with | FunctionEdge(_) -> true | _ -> false)
+            | _ -> false
+        override this.GetHashCode() = match(this) with ActionEdge(_) -> 0 | _ -> 1
 and 
-    [<CustomEquality>]
-    [<NoComparison>]
+    [<CustomEquality;NoComparison>]
     EventAction =
         | EventAction of Map<string, (Node * Node * Node * GraphValue * Graph -> unit)>
+        override this.Equals(other) =
+            match other with 
+            | :? EventAction -> true
+            | _ -> false
+        override this.GetHashCode() = 0
 
-        override x.Equals(b) =
-            true 
 and EventLog =
     {
         mutable Events: list<GraphEvent>
